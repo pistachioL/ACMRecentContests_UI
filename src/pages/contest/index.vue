@@ -49,7 +49,7 @@ import button from './button'
     },
     methods: {
       getData(){
-        var api = '//156.234.192.253:9090/api/contests'
+        var api = 'https://greenhathg.co/api/contests'
         axios.get(api).then((response)=>{
           this.tableData=response.data;
         }).catch((error)=>{
