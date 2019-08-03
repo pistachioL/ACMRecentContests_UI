@@ -21,7 +21,22 @@ import button from './button'
       return{
         tableData:[],
         columns: [
-          {key: 'oj', title: '平台', minWidth: 60, align: 'center', resizable: true, sortable: true},
+          {
+            key: 'oj', title: '平台', minWidth: 60, align: 'center', resizable: true,
+            filters: [
+            { text: '计蒜客', value: '计蒜客' },
+            { text: 'NowCoder', value: 'NowCoder' },
+            { text: 'CodeForces', value: 'CoderForces' },
+            { text: 'CodeChef', value: 'CodeChef' },
+            { text: 'Atcoder', value: 'Atcoder' }
+            ],
+            filterMethod (value, row) {
+              console.log(value);
+              console.log(row);
+               return row.oj === value
+            },
+            filterPlacement: 'bottom-end'
+          },
           {key: 'name', title: '比赛', minWidth: 150, align: 'center', resizable: true, sortable: true},
           {key: 'startTime', title: '开始时间', align: 'center', resizable: true, sortable: true},
           {key: 'endTime', title: '结束时间', align: 'center', resizable: true, sortable: true},
