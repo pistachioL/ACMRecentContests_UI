@@ -50,7 +50,7 @@ import button from './button'
           }
         ],
         options: {
-          height:697,
+          height:448,
           stripe: true,
           highlightCurrentRow: true,
           headerCellStyle: {
