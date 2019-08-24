@@ -13,41 +13,13 @@ const frameIn = [
     component: layoutHeaderAside,
     children: [
       // 首页
-      // {
-      //   path: 'index',
-      //   name: 'index',
-      //   meta: {
-      //     auth: true
-      //   },
-      //   component: _import('system/index')
-      // },
-      // 演示页面
       {
-        path: 'page1',
-        name: 'page1',
+        path: 'index',
+        name: 'index',
+        component: () => import('@/pages/contest'),
         meta: {
-          title: '页面 1',
-          auth: true
-        },
-        component: _import('demo/page1')
-      },
-      {
-        path: 'page2',
-        name: 'page2',
-        meta: {
-          title: '页面 2',
-          auth: true
-        },
-        component: _import('demo/page2')
-      },
-      {
-        path: 'page3',
-        name: 'page3',
-        meta: {
-          title: '页面 3',
-          auth: true
-        },
-        component: _import('demo/page3')
+          title: '最近比赛信息'
+        }
       },
       // 系统 前端日志
       {
@@ -72,15 +44,6 @@ const frameIn = [
         name: 'redirect',
         hidden: true,
         component: _import('system/function/redirect')
-      },
-      {
-        path: 'index',
-        name: 'index',
-        component: () => import('@/pages/contest'),
-        meta: {
-          auth: true,
-          title: '最近比赛信息'
-        }
       }
     ]
   }
