@@ -15,9 +15,6 @@
         class="page-login--content"
         flex="dir:top main:justify cross:center box:justify">
         <div class="page-login--content-header">
-          <p class="page-login--content-header-motto">
-            时间是一切财富中最宝贵的财富。 <span>—— 德奥弗拉斯多</span>
-          </p>
         </div>
         <div
           class="page-login--content-main"
@@ -55,37 +52,12 @@
               <span><d2-icon name="question-circle"/> 忘记密码</span>
               <span>注册用户</span>
             </p>
-            <!-- 快速登录按钮 -->
-            <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
-              快速选择用户（测试功能）
-            </el-button>
           </div>
         </div>
         <div class="page-login--content-footer">
-          <p class="page-login--content-footer-options">
-            <a href="#">帮助</a>
-            <a href="#">隐私</a>
-            <a href="#">条款</a>
-          </p>
-          <p class="page-login--content-footer-copyright">
-            Copyright <d2-icon name="copyright"/> 2018 D2 Projects 开源组织出品 <a href="https://github.com/FairyEver">@FairyEver</a>
-          </p>
         </div>
       </div>
     </div>
-    <el-dialog
-      title="快速选择用户"
-      :visible.sync="dialogVisible"
-      width="400px">
-      <el-row :gutter="10" style="margin: -20px 0px -10px 0px;">
-        <el-col v-for="(user, index) in users" :key="index" :span="8">
-          <div class="page-login--quick-user" @click="handleUserBtnClick(user)">
-            <d2-icon name="user-circle-o"/>
-            <span>{{user.name}}</span>
-          </div>
-        </el-col>
-      </el-row>
-    </el-dialog>
   </div>
 </template>
 
@@ -97,29 +69,11 @@ export default {
     return {
       timeInterval: null,
       time: dayjs().format('HH:mm:ss'),
-      // 快速选择用户
       dialogVisible: false,
-      users: [
-        {
-          name: '管理员',
-          username: 'admin',
-          password: 'admin'
-        },
-        {
-          name: '编辑',
-          username: 'editor',
-          password: 'editor'
-        },
-        {
-          name: '用户1',
-          username: 'user1',
-          password: 'user1'
-        }
-      ],
       // 表单
       formLogin: {
-        username: 'admin',
-        password: 'admin',
+        username: '1234',
+        password: '1234',
         code: 'v9am'
       },
       // 校验
@@ -152,21 +106,13 @@ export default {
       this.time = dayjs().format('HH:mm:ss')
     },
     /**
-     * @description 接收选择一个用户快速登录的事件
-     * @param {Object} user 用户信息
-     */
-    handleUserBtnClick (user) {
-      this.formLogin.username = user.username
-      this.formLogin.password = user.password
-      this.submit()
-    },
-    /**
      * @description 提交表单
      */
     // 提交登录信息
     submit () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
+          
           // 登录
           // 注意 这里的演示没有传验证码
           // 具体需要传递的数据请自行修改代码
@@ -269,30 +215,6 @@ export default {
     }
     .page-login--quick {
       width: 100%;
-    }
-  }
-  // 快速选择用户面板
-  .page-login--quick-user {
-    @extend %flex-center-col;
-    padding: 10px 0px;
-    border-radius: 4px;
-    &:hover {
-      background-color: $color-bg;
-      i {
-        color: $color-text-normal;
-      }
-      span {
-        color: $color-text-normal;
-      }
-    }
-    i {
-      font-size: 36px;
-      color: $color-text-sub;
-    }
-    span {
-      font-size: 12px;
-      margin-top: 10px;
-      color: $color-text-sub;
     }
   }
   // footer
