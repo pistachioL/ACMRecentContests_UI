@@ -1,6 +1,5 @@
 <template>
   <d2-container>
-    <!-- 显示的表格配置 -->
     <d2-crud
     ref="d2Crud"
     :columns="columns"
@@ -39,7 +38,6 @@ import { compileFunction } from 'vm';
             },
             filterPlacement: 'bottom-end'
           },
-          // {key: 'name', title: '比赛', minWidth: 150, align: 'center', resizable: true, sortable: true},
           {key: 'name', title: '比赛', tooltip: true, align: 'center', resizable: true, sortable: true},
           {key: 'startTime', title: '开始时间', align: 'center', resizable: true, sortable: true},
           {key: 'endTime', title: '结束时间', align: 'center', resizable: true, sortable: true},

@@ -21,6 +21,15 @@ const frameIn = [
           title: '最近比赛信息'
         }
       },
+      {
+        path: 'user/center',
+        name: 'user_center',
+        component: () => import('@/pages/user/center'),
+        meta: {
+          title: '个人中心',
+          auth: true
+        }
+      },
       // 系统 前端日志
       {
         path: 'log',
