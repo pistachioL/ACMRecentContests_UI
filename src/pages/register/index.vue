@@ -23,14 +23,14 @@
           class="page-login--content-main"
           flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/login_logo.png">
+          <img class="page-login--logo" src="src/views/system/login/image/login_logo.png">
           <!-- 表单 -->
           <div class="page-login--form">
             <el-card shadow="never">
               <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
                 <el-form-item prop="username">
                   <el-input type="text" v-model="formLogin.username" placeholder="用户名">
-                    <i slot="prepend" class="fa fa-user-circle-o"></i>
+                    <i slot="prepend" class="fa fa-user-circle-o">用户名</i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
@@ -42,7 +42,6 @@
                   <el-input type="text" v-model="formLogin.code" placeholder="- - - -">
                     <template slot="prepend">验证码</template>
                     <template slot="append">
-                      <img class="login-code" src="./image/login-code.png">
                     </template>
                   </el-input>
                 </el-form-item>
@@ -54,13 +53,12 @@
               flex="main:justify cross:center">
               <span><d2-icon name="question-circle"/> 忘记密码</span>
               <span>
-                <a style="text-decoration:none;color:#409EFF" href="/register">注册用户</a>
+                  <a href="/register">注册用户</a>
               </span>
             </p>
-            <a style="text-decoration:none;color:white" href="/index">
-              <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
-                游客访问</el-button> 
-            </a>
+            <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
+              <a style="text-decoration:none;color:white" href="/index" >游客访问</a>
+            </el-button>
           </div>
         </div>
         <div class="page-login--content-footer">
