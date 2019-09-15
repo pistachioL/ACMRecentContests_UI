@@ -15,12 +15,15 @@
         class="page-login--content"
         flex="dir:top main:justify cross:center box:justify">
         <div class="page-login--content-header">
+          <p class="page-login--content-header-motto">
+            ACM--国际大学生程序设计竞赛
+          </p>
         </div>
         <div
           class="page-login--content-main"
           flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+          <img class="page-login--logo" src="./image/login_logo.png">
           <!-- 表单 -->
           <div class="page-login--form">
             <el-card shadow="never">
@@ -52,6 +55,9 @@
               <span><d2-icon name="question-circle"/> 忘记密码</span>
               <span>注册用户</span>
             </p>
+            <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
+              <a style="text-decoration:none;color:white" href="/index" >游客访问</a>
+            </el-button>
           </div>
         </div>
         <div class="page-login--content-footer">
