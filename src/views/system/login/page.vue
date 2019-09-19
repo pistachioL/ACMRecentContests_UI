@@ -42,7 +42,7 @@
                   <el-input type="text" v-model="formLogin.code" placeholder="- - - -">
                     <template slot="prepend">验证码</template>
                     <template slot="append">
-                      <img class="login-code" src="./image/login-code.png">
+                      <img class="login-code" :src="imgUrl">
                     </template>
                   </el-input>
                 </el-form-item>
@@ -54,13 +54,12 @@
               flex="main:justify cross:center">
               <span><d2-icon name="question-circle"/> 忘记密码</span>
               <span>
-                <a style="text-decoration:none;color:#409EFF" href="/register">注册用户</a>
+                <a style="text-decoration:none;color:#409EFF" @click="redirectionRegister">注册用户</a>
               </span>
             </p>
-            <a style="text-decoration:none;color:white" href="/index">
-              <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
-                游客访问</el-button> 
-            </a>
+            <el-button class="page-login--quick" size="default" type="info" @click="redirectionIndex">
+                游客访问
+            </el-button>
           </div>
         </div>
         <div class="page-login--content-footer">
@@ -73,12 +72,13 @@
 <script>
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
+import {getCaptcha} from '@/api/getCaptcha'
+
 export default {
   data () {
     return {
       timeInterval: null,
       time: dayjs().format('HH:mm:ss'),
-      dialogVisible: false,
       // 表单
       formLogin: {
         username: '1234',
@@ -96,7 +96,10 @@ export default {
         code: [
           { required: true, message: '请输入验证码', trigger: 'blur' }
         ]
-      }
+      },
+      baseUrl: 'http://py1yxeu91.bkt.clouddn.com/',
+      imgUrl: '',
+      fileName: ''
     }
   },
   mounted () {
@@ -106,6 +109,14 @@ export default {
   },
   beforeDestroy () {
     clearInterval(this.timeInterval)
+  },
+  created(){
+    this.$nextTick(function () {
+      getCaptcha().then(res => {
+        this.fileName = res.fileName
+        this.imgUrl = this.baseUrl+this.fileName
+      })
+    })
   },
   methods: {
     ...mapActions('d2admin/account', [
@@ -127,9 +138,10 @@ export default {
           // 具体需要传递的数据请自行修改代码
           this.login({
             username: this.formLogin.username,
-            password: this.formLogin.password
-          })
-            .then(() => {
+            password: this.formLogin.password,
+            code: this.formLogin.code,
+            fileName: this.fileName
+          }).then(() => {
               // 重定向对象不存在则返回顶层路径
               this.$router.replace(this.$route.query.redirect || '/')
             })
@@ -138,6 +150,12 @@ export default {
           this.$message.error('表单校验失败')
         }
       })
+    },
+    redirectionIndex(){
+      this.$router.push({path:'/index'})
+    },
+    redirectionRegister(){
+      this.$router.push({path:'/register'})
     }
   }
 }
