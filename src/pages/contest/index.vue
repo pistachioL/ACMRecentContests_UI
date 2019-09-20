@@ -12,6 +12,8 @@
 <script>
 import axios from 'axios';
 import button from './button'
+import { constants } from 'crypto';
+import { compileFunction } from 'vm';
 
   export default{
     components:{
@@ -37,7 +39,8 @@ import button from './button'
             },
             filterPlacement: 'bottom-end'
           },
-          {key: 'name', title: '比赛', minWidth: 150, align: 'center', resizable: true, sortable: true},
+          // {key: 'name', title: '比赛', minWidth: 150, align: 'center', resizable: true, sortable: true},
+          {key: 'name', title: '比赛', tooltip: true, align: 'center', resizable: true, sortable: true},
           {key: 'startTime', title: '开始时间', align: 'center', resizable: true, sortable: true},
           {key: 'endTime', title: '结束时间', align: 'center', resizable: true, sortable: true},
           {key: 'length', title: '时长', align: 'center', resizable: true, sortable: true},
@@ -65,7 +68,7 @@ import button from './button'
     },
     methods: {
       getData(){
-        var api = 'https://greenhathg.co/api/contests'
+        let api = 'https://greenhathg.co/api/contests'
         axios.get(api).then((response)=>{
           this.tableData=response.data;
         }).catch((error)=>{
@@ -76,8 +79,15 @@ import button from './button'
     },
     mounted(){
       this.getData();
-    }
+      this.$nextTick(() => {
+        let self = this;
+        this.options.height = window.innerHeight - this.$refs.d2Crud.$refs.elTable.$el.offsetHeight - 55;
 
+        window.onresize = function() {
+            self.options.height = window.innerHeight - this.$refs.d2Crud.$refs.elTable.$el.offsetHeight - 55;
+        }
+    })
+    }
   }
 
 </script>
