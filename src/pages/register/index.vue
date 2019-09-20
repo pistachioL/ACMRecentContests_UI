@@ -23,7 +23,7 @@
           class="page-login--content-main"
           flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/login_logo.png">
+          <img class="page-login--logo" src="../../views/system/login/image/login_logo.png">
           <!-- 表单 -->
           <div class="page-login--form">
             <el-card shadow="never">
@@ -38,27 +38,24 @@
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
+                <el-form-item prop="mail">
+                  <el-input type="text" v-model="formLogin.mail" placeholder="邮箱">
+                    <i slot="prepend" class="fa fa-envelope-o"></i>
+                  </el-input>
+                </el-form-item>
                 <el-form-item prop="code">
-                  <el-input type="text" v-model="formLogin.code" placeholder="- - - -">
-                    <template slot="prepend">验证码</template>
+                  <el-input type="text" v-model="formLogin.code" placeholder="验证码">
+                    <i slot="prepend" class="fa fa-dot-circle-o"></i>
                     <template slot="append">
-                      <img class="login-code" :src="imgUrl">
+                      <el-button size="default" @click="getVerificationCode" type="primary" class="button-login">验证邮箱</el-button>
                     </template>
                   </el-input>
                 </el-form-item>
-                <el-button size="default" @click="submit" type="primary" class="button-login">登录</el-button>
+                <el-button size="default" @click="submit" type="primary" class="button-login">注册</el-button>
               </el-form>
             </el-card>
-            <p
-              class="page-login--options"
-              flex="main:justify cross:center">
-              <span><d2-icon name="question-circle"/> 忘记密码</span>
-              <span>
-                <a style="text-decoration:none;color:#409EFF" @click="redirectionRegister">注册用户</a>
-              </span>
-            </p>
             <el-button class="page-login--quick" size="default" type="info" @click="redirectionIndex">
-                游客访问
+              游客访问
             </el-button>
           </div>
         </div>
@@ -72,18 +69,21 @@
 <script>
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
-import {getCaptcha} from '@/api/getCaptcha'
+import { getCode } from '@/api/getCode'
+import { register } from '@/api/register'
 
 export default {
   data () {
     return {
       timeInterval: null,
       time: dayjs().format('HH:mm:ss'),
+      dialogVisible: false,
       // 表单
       formLogin: {
-        username: '1234',
-        password: '1234',
-        code: 'v9am'
+        username: '',
+        password: '',
+        code: '',
+        mail: ''
       },
       // 校验
       rules: {
@@ -95,11 +95,11 @@ export default {
         ],
         code: [
           { required: true, message: '请输入验证码', trigger: 'blur' }
+        ],
+        mail: [
+          { required: true, message: '请输入邮箱', trigger: 'blur' }
         ]
-      },
-      baseUrl: 'http://py1yxeu91.bkt.clouddn.com/',
-      imgUrl: '',
-      fileName: ''
+      }
     }
   },
   mounted () {
@@ -110,14 +110,6 @@ export default {
   beforeDestroy () {
     clearInterval(this.timeInterval)
   },
-  created(){
-    this.$nextTick(function () {
-      getCaptcha().then(res => {
-        this.fileName = res.fileName
-        this.imgUrl = this.baseUrl+this.fileName
-      })
-    })
-  },
   methods: {
     ...mapActions('d2admin/account', [
       'login'
@@ -125,38 +117,51 @@ export default {
     refreshTime () {
       this.time = dayjs().format('HH:mm:ss')
     },
-    /**
-     * @description 提交表单
-     */
-    // 提交登录信息
-    submit () {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          
-          // 登录
-          // 注意 这里的演示没有传验证码
-          // 具体需要传递的数据请自行修改代码
-          this.login({
-            username: this.formLogin.username,
-            password: this.formLogin.password,
-            code: this.formLogin.code,
-            fileName: this.fileName
-          }).then(() => {
-              // 重定向对象不存在则返回顶层路径
-              this.$router.replace(this.$route.query.redirect || '/')
-            })
-        } else {
-          // 登录表单校验失败
-          this.$message.error('表单校验失败')
-        }
+    sleep(d){
+      for(let t = Date.now();Date.now() - t <= d;);
+    },
+    submit(){
+      register({
+        username: this.formLogin.username,
+        password: this.formLogin.password,
+        mail: this.formLogin.mail
+      }, this.formLogin.code).then(res =>{
+          this.$message.success("注册成功")
+          this.$router.push({path:'/login'})
+      }).catch(err =>{
+        console.log(err)
       })
+    },
+    getVerificationCode(){
+      let s = this.isEmail(this.formLogin.mail)
+      console.log(s)
+      if(s !== ''){
+        this.$message.error(s)
+        return
+      }
+      getCode({
+        username: this.formLogin.username,
+        mail: this.formLogin.mail
+      }).then(res => {
+        this.$message.success("发送成功，请检查邮箱")
+      }).catch(err =>{
+        console.log(err)
+      })
+    },
+    isEmail(value){
+      if (!value) {
+        return '请输入邮箱'
+      }
+      let pattern = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
+      if(!pattern.test(value)){
+        return '输入的邮箱格式错误'
+      }
+      return ''
     },
     redirectionIndex(){
       this.$router.push({path:'/index'})
     },
-    redirectionRegister(){
-      this.$router.push({path:'/register'})
-    }
+
   }
 }
 </script>
