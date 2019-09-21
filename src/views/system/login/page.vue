@@ -29,7 +29,7 @@
             <el-card shadow="never">
               <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
                 <el-form-item prop="username">
-                  <el-input type="text" v-model="formLogin.username" placeholder="用户名">
+                  <el-input type="text" v-model="formLogin.username" placeholder="用户名/邮箱">
                     <i slot="prepend" class="fa fa-user-circle-o"></i>
                   </el-input>
                 </el-form-item>
@@ -52,7 +52,7 @@
             <p
               class="page-login--options"
               flex="main:justify cross:center">
-              <span><d2-icon name="question-circle"/> 忘记密码</span>
+              <span @click="redirectionRestpwd"><d2-icon  name="question-circle"/> 忘记密码</span>
               <span>
                 <a style="text-decoration:none;color:#409EFF" @click="redirectionRegister">注册用户</a>
               </span>
@@ -156,6 +156,9 @@ export default {
     },
     redirectionRegister(){
       this.$router.push({path:'/register'})
+    },
+    redirectionRestpwd(){
+      this.$router.push({path:'/resetpwd'})
     }
   }
 }

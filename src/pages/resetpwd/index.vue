@@ -28,9 +28,10 @@
           <div class="page-login--form">
             <el-card shadow="never">
               <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
-                <el-form-item prop="username">
-                  <el-input type="text" v-model="formLogin.username" placeholder="用户名">
-                    <i slot="prepend" class="fa fa-user-circle-o"></i>
+
+                <el-form-item prop="mail">
+                  <el-input type="text" v-model="formLogin.mail" placeholder="邮箱">
+                    <i slot="prepend" class="fa fa-envelope-o"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
@@ -38,25 +39,17 @@
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="mail">
-                  <el-input type="text" v-model="formLogin.mail" placeholder="邮箱">
-                    <i slot="prepend" class="fa fa-envelope-o"></i>
-                  </el-input>
-                </el-form-item>
                 <el-form-item prop="code">
                   <el-input type="text" v-model="formLogin.code" placeholder="验证码">
                     <i slot="prepend" class="fa fa-dot-circle-o"></i>
-                    <template slot="append" >
+                    <template slot="append">
                       <el-button size="default" @click="getVerificationCode" type="primary" class="button-login">验证邮箱</el-button>
                     </template>
                   </el-input>
                 </el-form-item>
-                <el-button size="default" @click="submit" type="primary" class="button-login">注册</el-button>
+                <el-button size="default" @click="submit" type="primary" class="button-login">重置密码</el-button>
               </el-form>
             </el-card>
-            <el-button class="page-login--quick" size="default" type="info" @click="redirectionIndex">
-              游客访问
-            </el-button>
           </div>
         </div>
         <div class="page-login--content-footer">
@@ -70,7 +63,7 @@
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
 import { getCode } from '@/api/getCode'
-import { register } from '@/api/register'
+import { resetpwd } from '@/api/resetpwd'
 
 export default {
   data () {
@@ -111,16 +104,19 @@ export default {
     clearInterval(this.timeInterval)
   },
   methods: {
+    ...mapActions('d2admin/account', [
+      'login'
+    ]),
     refreshTime () {
       this.time = dayjs().format('HH:mm:ss')
     },
     submit(){
-      register({
-        username: this.formLogin.username,
+      resetpwd({
         password: this.formLogin.password,
-        mail: this.formLogin.mail
-      }, this.formLogin.code).then(res =>{
-          this.$message.success("注册成功")
+        mail: this.formLogin.mail,
+        code: this.formLogin.code
+      }).then(res =>{
+          this.$message.success("重置成功")
           this.$router.push({path:'/login'})
       }).catch(err =>{
         console.log(err)
@@ -136,9 +132,8 @@ export default {
       getCode({
         username: this.formLogin.username,
         mail: this.formLogin.mail,
-        type: 'register'
+        type: 'resetpwd'
       }).then(res => {
-        console.log(res)
         this.$message.success("发送成功，请检查邮箱")
       }).catch(err =>{
         console.log(err)

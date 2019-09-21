@@ -72,6 +72,11 @@ const frameOut = [
     path: '/register',
     name: 'register',
     component: () => import('@/pages/register')
+  },
+  {
+    path: '/resetpwd',
+    name: 'resetpwd',
+    component: () => import('@/pages/resetpwd')
   }
 ]
 
