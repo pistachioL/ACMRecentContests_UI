@@ -28,7 +28,6 @@
           <div class="page-login--form">
             <el-card shadow="never">
               <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
-
                 <el-form-item prop="mail">
                   <el-input type="text" v-model="formLogin.mail" placeholder="邮箱">
                     <i slot="prepend" class="fa fa-envelope-o"></i>
@@ -55,6 +54,17 @@
                 <el-button size="default" @click="submit" type="primary" class="button-login">重置密码</el-button>
               </el-form>
             </el-card>
+            <p
+              class="page-login--options"
+              flex="main:justify cross:center">
+              <span @click="redirectionLogin"><d2-icon  name="question-circle"/>登录页面</span>
+              <span>
+                <a style="text-decoration:none;color:#409EFF" @click="redirectionRegister">注册用户</a>
+              </span>
+            </p>
+            <el-button class="page-login--quick" size="default" type="info" @click="redirectionIndex">
+              游客访问
+            </el-button>
           </div>
         </div>
         <div class="page-login--content-footer">
@@ -170,7 +180,12 @@ export default {
     redirectionIndex(){
       this.$router.push({path:'/index'})
     },
-
+    redirectionLogin(){
+      this.$router.replace({path:'/login'})
+    },
+    redirectionRegister(){
+      this.$router.replace({path:'/register'})
+    }
   }
 }
 </script>

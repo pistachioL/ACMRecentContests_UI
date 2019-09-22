@@ -59,6 +59,14 @@
                 <el-button size="default" @click="submit" type="primary" class="button-login">注册</el-button>
               </el-form>
             </el-card>
+            <p
+              class="page-login--options"
+              flex="main:justify cross:center">
+              <span @click="redirectionRestpwd"><d2-icon name="question-circle"/>忘记密码</span>
+              <span>
+                <a style="text-decoration:none;color:#409EFF" @click="redirectionLogin">登录页面</a>
+              </span>
+            </p>
             <el-button class="page-login--quick" size="default" type="info" @click="redirectionIndex">
               游客访问
             </el-button>
@@ -175,6 +183,12 @@ export default {
     redirectionIndex(){
       this.$router.push({path:'/index'})
     },
+    redirectionLogin(){
+      this.$router.replace({path:'/login'})
+    },
+    redirectionRestpwd(){
+      this.$router.replace({path:'/resetpwd'})
+    }
 
   }
 }
