@@ -81,9 +81,9 @@ export default {
       time: dayjs().format('HH:mm:ss'),
       // 表单
       formLogin: {
-        username: '1234',
-        password: '1234',
-        code: 'v9am'
+        username: '',
+        password: '',
+        code: ''
       },
       // 校验
       rules: {
@@ -112,10 +112,7 @@ export default {
   },
   created(){
     this.$nextTick(function () {
-      getCaptcha().then(res => {
-        this.fileName = res.fileName
-        this.imgUrl = this.baseUrl+this.fileName
-      })
+        this.Captcha()
     })
   },
   methods: {
@@ -142,9 +139,13 @@ export default {
             code: this.formLogin.code,
             fileName: this.fileName
           }).then(() => {
+            this.$message.success("登录成功")
               // 重定向对象不存在则返回顶层路径
               this.$router.replace(this.$route.query.redirect || '/')
-            })
+            }).catch(err =>{
+            this.Captcha()
+          })
+
         } else {
           // 登录表单校验失败
           this.$message.error('表单校验失败')
@@ -159,6 +160,12 @@ export default {
     },
     redirectionRestpwd(){
       this.$router.push({path:'/resetpwd'})
+    },
+    Captcha(){
+      getCaptcha().then(res => {
+        this.fileName = res.fileName
+        this.imgUrl = this.baseUrl+this.fileName
+      })
     }
   }
 }

@@ -39,6 +39,11 @@
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
+                <el-form-item prop="password_confirm">
+                  <el-input type="password" v-model="formLogin.password_confirm" placeholder="确认密码">
+                    <i slot="prepend" class="fa fa-keyboard-o"></i>
+                  </el-input>
+                </el-form-item>
                 <el-form-item prop="code">
                   <el-input type="text" v-model="formLogin.code" placeholder="验证码">
                     <i slot="prepend" class="fa fa-dot-circle-o"></i>
@@ -67,6 +72,15 @@ import { resetpwd } from '@/api/resetpwd'
 
 export default {
   data () {
+    let validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.formLogin.password) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
     return {
       timeInterval: null,
       time: dayjs().format('HH:mm:ss'),
@@ -75,6 +89,7 @@ export default {
       formLogin: {
         username: '',
         password: '',
+        password_confirm: '',
         code: '',
         mail: ''
       },
@@ -91,6 +106,9 @@ export default {
         ],
         mail: [
           { required: true, message: '请输入邮箱', trigger: 'blur' }
+        ],
+        password_confirm:[
+          {validator: validatePass, trigger: 'blur'}
         ]
       }
     }
