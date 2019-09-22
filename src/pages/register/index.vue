@@ -165,7 +165,7 @@ export default {
         type: 'register'
       }).then(res => {
         console.log(res)
-        this.$message.success("发送成功，请检查邮箱")
+        this.$message.success("发送成功，请检查邮箱，如果没有，请检查垃圾箱")
       }).catch(err =>{
         console.log(err)
       })

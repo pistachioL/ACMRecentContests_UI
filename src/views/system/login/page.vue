@@ -42,7 +42,7 @@
                   <el-input type="text" v-model="formLogin.code" placeholder="- - - -">
                     <template slot="prepend">验证码</template>
                     <template slot="append">
-                      <img class="login-code" :src="imgUrl">
+                      <img @click='clickImg' class="login-code" :src="imgUrl">
                     </template>
                   </el-input>
                 </el-form-item>
@@ -166,6 +166,9 @@ export default {
         this.fileName = res.fileName
         this.imgUrl = this.baseUrl+this.fileName
       })
+    },
+    clickImg(){
+      this.Captcha()
     }
   }
 }
