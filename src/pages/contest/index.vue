@@ -53,6 +53,7 @@ import { compileFunction } from 'vm';
           }
         ],
         options: {
+          height:697,
           stripe: true,
           highlightCurrentRow: true,
           headerCellStyle: {
