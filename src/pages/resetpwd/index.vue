@@ -34,12 +34,12 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                  <el-input type="password" v-model="formLogin.password" placeholder="密码">
+                  <el-input type="password" v-model="formLogin.password" placeholder="密码" show-password>
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password_confirm">
-                  <el-input type="password" v-model="formLogin.password_confirm" placeholder="确认密码">
+                  <el-input type="password" v-model="formLogin.password_confirm" placeholder="确认密码" show-password>
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
@@ -103,6 +103,8 @@ export default {
         code: '',
         mail: ''
       },
+      //密码显示
+      visible: true,
       // 校验
       rules: {
         username: [
@@ -185,6 +187,10 @@ export default {
     },
     redirectionRegister(){
       this.$router.replace({path:'/register'})
+    },
+    //密码显示
+    changePass(value) {
+      this.visible = !(value === 'show');
     }
   }
 }
