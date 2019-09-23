@@ -17,7 +17,7 @@ export default {
       username = '',
       password = '',
       code = '',
-      fileName = ''
+      imgId = ''
     } = {}) {
       return new Promise((resolve, reject) => {
         // 开始请求登录接口
@@ -25,7 +25,7 @@ export default {
           username,
           password,
           code,
-          fileName
+          imgId
         })
           .then(async res => {
             // 设置 cookie 一定要存 uuid 和 token 两个 cookie

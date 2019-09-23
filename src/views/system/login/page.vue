@@ -42,7 +42,7 @@
                   <el-input type="text" v-model="formLogin.code" placeholder="- - - -">
                     <template slot="prepend">验证码</template>
                     <template slot="append">
-                      <img @click='clickImg' class="login-code" :src="imgUrl">
+                      <img @click='clickImg' class="login-code" :src="'data:image/png;base64,'+imgUrl">
                     </template>
                   </el-input>
                 </el-form-item>
@@ -97,9 +97,8 @@ export default {
           { required: true, message: '请输入验证码', trigger: 'blur' }
         ]
       },
-      baseUrl: 'http://py1yxeu91.bkt.clouddn.com/',
       imgUrl: '',
-      fileName: ''
+      imgId: ''
     }
   },
   mounted () {
@@ -137,7 +136,7 @@ export default {
             username: this.formLogin.username,
             password: this.formLogin.password,
             code: this.formLogin.code,
-            fileName: this.fileName
+            imgId: this.imgId
           }).then(() => {
             this.$message.success("登录成功")
               // 重定向对象不存在则返回顶层路径
@@ -163,8 +162,8 @@ export default {
     },
     Captcha(){
       getCaptcha().then(res => {
-        this.fileName = res.fileName
-        this.imgUrl = this.baseUrl+this.fileName
+        this.imgId = res.id
+        this.imgUrl = res.base64
       })
     },
     clickImg(){
