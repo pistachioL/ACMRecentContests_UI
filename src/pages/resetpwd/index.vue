@@ -47,11 +47,11 @@
                   <el-input type="text" v-model="formLogin.code" placeholder="验证码">
                     <i slot="prepend" class="fa fa-dot-circle-o"></i>
                     <template slot="append">
-                      <el-button size="default" @click="getVerificationCode" type="primary" class="button-login">验证邮箱</el-button>
+                      <el-button size="default" @click="getVerificationCode" type="primary" class="button-login" :loading="loadingMail">验证邮箱</el-button>
                     </template>
                   </el-input>
                 </el-form-item>
-                <el-button size="default" @click="submit" type="primary" class="button-login">重置密码</el-button>
+                <el-button size="default" @click="submit" type="primary" class="button-login" :loading="loadingReset">重置密码</el-button>
               </el-form>
             </el-card>
             <p
@@ -104,7 +104,8 @@ export default {
         mail: ''
       },
       //密码显示
-      visible: true,
+      loadingMail: false,
+      loadingReset: false,
       // 校验
       rules: {
         username: [
@@ -141,14 +142,17 @@ export default {
       this.time = dayjs().format('HH:mm:ss')
     },
     submit(){
+      this.loadingReset = true
       resetpwd({
         password: this.formLogin.password,
         mail: this.formLogin.mail,
         code: this.formLogin.code
       }).then(res =>{
-          this.$message.success("重置成功")
-          this.$router.push({path:'/login'})
+        this.loadingReset = false
+        this.$message.success("重置成功")
+        this.$router.push({path:'/login'})
       }).catch(err =>{
+        this.loadingReset = false
         console.log(err)
       })
     },
@@ -159,13 +163,16 @@ export default {
         this.$message.error(s)
         return
       }
+      this.loadingMail = true
       getCode({
         username: this.formLogin.username,
         mail: this.formLogin.mail,
         type: 'resetpwd'
       }).then(res => {
-        this.$message.success("发送成功，请检查邮箱")
+        this.loadingMail = false
+        this.$message.success("发送到邮箱成功，如果没有收到，请检查垃圾箱")
       }).catch(err =>{
+        this.loadingMail = false
         console.log(err)
       })
     },

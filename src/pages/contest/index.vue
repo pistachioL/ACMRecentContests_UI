@@ -4,7 +4,8 @@
     ref="d2Crud"
     :columns="columns"
     :data="tableData"
-    :options="options"/>
+    :options="options"
+    :loading="loading"/>
   </d2-container>
 </template>
 
@@ -21,6 +22,7 @@ import { compileFunction } from 'vm';
     data(){
       return{
         tableData:[],
+        loading: true,
         columns: [
           {
             key: 'oj', title: '平台', minWidth: 60, align: 'center', resizable: true,
@@ -67,6 +69,7 @@ import { compileFunction } from 'vm';
       getData(){
         let api = 'https://greenhathg.co/api/contests'
         axios.get(api).then((response)=>{
+          this.loading = false
           this.tableData=response.data;
         }).catch((error)=>{
           console.log(error);
