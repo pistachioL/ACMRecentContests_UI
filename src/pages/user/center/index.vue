@@ -21,9 +21,9 @@
               </el-upload>
             </div>
             <ul class="user-info">
-              <li><d2-icon name="user-o" /> 用户名称 <div class="user-right">{{ user.username }}</div></li>
-              <li><d2-icon name="envelope-o" /> 用户邮箱 <div class="user-right">{{ user.email }}</div></li>
-              <li><d2-icon name="calendar-o" /> 创建日期 <div class="user-right">{{ user.createTime }}</div></li>
+              <li><d2-icon name="user-o" /> 用户名称 <div class="user-right">{{`${info.name}`}}</div></li>
+              <li><d2-icon name="envelope-o" /> 用户邮箱 <div class="user-right">{{`${info.mail}`}}</div></li>
+              <li><d2-icon name="calendar-o" /> 创建日期 <div class="user-right">{{`${info.createTime}`}}</div></li>
               <li>
                 <d2-icon name="address-card-o" /> 安全设置
                 <div class="user-right">
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { mapState} from 'vuex'
 export default {
     data(){
         return{
@@ -166,7 +167,32 @@ export default {
                 console.log('err', err)
                 this.loading = false
             })
+        },
+        formatDate(date, fmt) {
+          if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+          }
+          let o = {
+            'M+': date.getMonth() + 1,
+            'd+': date.getDate(),
+            'h+': date.getHours(),
+            'm+': date.getMinutes(),
+            's+': date.getSeconds()
+          }
+          for (let k in o) {
+            if (new RegExp(`(${k})`).test(fmt)) {
+              let str = o[k] + ''
+              fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str))
+            }
+          }
+          return fmt
         }
+
+    },
+    computed: {
+      ...mapState('d2admin/user', [
+        'info'
+      ])
     }
 }
 </script>

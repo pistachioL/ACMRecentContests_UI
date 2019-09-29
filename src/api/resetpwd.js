@@ -2,7 +2,7 @@ import request from '@/plugin/axios'
 
 export function resetpwd (data) {
   return request({
-    url: 'v1/resetpwd',
+    url: '/resetpwd',
     method: 'post',
     data
   })

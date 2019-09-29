@@ -2,7 +2,7 @@ import request from '@/plugin/axios'
 
 export function getCode (data) {
     return request({
-        url: '/v1/code',
+        url: '/code',
         method: 'post',
         data
     })

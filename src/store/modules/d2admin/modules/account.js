@@ -2,6 +2,7 @@ import { Message, MessageBox } from 'element-ui'
 import util from '@/libs/util.js'
 import router from '@/router'
 import { AccountLogin } from '@api/sys.login'
+import {format} from '@/common/dateUtil.js'
 
 export default {
   namespaced: true,
@@ -38,7 +39,9 @@ export default {
             util.cookies.set('token', res.token)
             // 设置 vuex 用户信息
             await dispatch('d2admin/user/set', {
-              name: res.userInfo.username
+              name: res.userInfo.username,
+              mail: res.userInfo.mail,
+              createTime: format(new Date(res.userInfo.createTime), "yyyy-MM-dd hh:mm")
             }, { root: true })
             // 用户登录后从持久化数据加载一系列的设置
             await dispatch('load')
@@ -115,5 +118,5 @@ export default {
         resolve()
       })
     }
-  }
+  },
 }
