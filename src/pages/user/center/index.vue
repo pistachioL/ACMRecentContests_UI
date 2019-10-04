@@ -226,7 +226,6 @@ export default {
 }
 </script>
 
-
 <style rel="stylesheet/scss" lang="scss">
   .avatar-uploader-icon {
     font-size: 28px;
@@ -242,6 +241,7 @@ export default {
     display: block;
     border-radius: 50%
   }
+
   .user-info {
     padding-left: 0px;
     list-style: none;
@@ -258,13 +258,6 @@ export default {
         color: #317EF3;
       }
     }
-  }
-
-  .disabled{
-    background-color: #ddd;
-    border-color: #ddd;
-    color:#57a3f3;
-    cursor: not-allowed;  // 鼠标变化
   }
 
 </style>

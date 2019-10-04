@@ -28,11 +28,6 @@
   import {isEmail} from '@/common/emailUtil.js'
   import { mapState} from 'vuex'
   export default {
-    // props: {
-    //   scope: {
-    //     default: null
-    //   }
-    // },
     data() {
       return {
         dialogFormVisible: false,
@@ -49,7 +44,7 @@
           ]
         },
         content: '发送验证码',
-        totalTime: 10,
+        totalTime: 60,
         canClick: true
       }
     },
@@ -95,6 +90,13 @@
   }
 </script>
 
-<style scoped>
+<style>
+
+  .disabled{
+    background-color: #ddd;
+    border-color: #ddd;
+    color:#57a3f3;
+    cursor: not-allowed;
+  }
 
 </style>
