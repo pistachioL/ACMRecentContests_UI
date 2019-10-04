@@ -29,32 +29,11 @@
               </li>
               <li>
                 安全设置
-                <a @click="dialogFormVisible = true" target="_blank" style="color: #317EF3; text-decoration: underline;
-                  cursor: pointer; float: right">修改邮箱</a>
-                <el-dialog title="提示" :visible.sync="dialogFormVisible" width="25%">
-                  <el-form :model="form" :rules="rules">
+                <div style="float:right;">
+                <updateEmail></updateEmail>
 
-                    <el-form-item label="请输入邮箱" prop="email">
-                      <el-input v-model="form.email" autocomplete="off" clearable>
-                        <el-button :class="{disabled: !this.canClick}" style="color: #409EFF" slot="append" @click="countDown">{{content}}</el-button>
-                      </el-input>
-                    </el-form-item>
-
-                    <el-form-item label="请输入验证码" prop="code">
-                      <el-input v-model="form.code" autocomplete="off" clearable></el-input>
-                    </el-form-item>
-
-                  </el-form>
-                  <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="updateEmail">确 定</el-button>
-                  </div>
-                </el-dialog>
-                
-                <a style="float: right">&nbsp;&nbsp;</a>
-
-                <a @click="dialogPwdVisible = true" target="_blank" style="color: #317EF3; text-decoration: underline;
-                    cursor: pointer; float: right">修改密码</a>
+<!--                  <a style="float: right">&nbsp;&nbsp;</a>-->
+                </div>
               </li>
             </ul>
           </div>
@@ -82,9 +61,11 @@
 <script>
 import { mapState} from 'vuex'
 import { regionData, CodeToText } from 'element-china-area-data'
+import updateEmail from "./email";
 
 export default {
-    data(){
+  components: {updateEmail},
+  data(){
         return {
           columns: [
             {
@@ -235,57 +216,12 @@ export default {
             }, { root: true })
             this.buttonValue = '修改'
           }
-        },
-
-      async updateEmail(){
-        let s = this.isEmail(this.form.email)
-        console.log(s)
-        if(s !== ''){
-          this.$message.error(s)
-          return
         }
-        this.dialogFormVisible = false
-        await this.$store.dispatch('d2admin/user/set', {
-          name: this.info.name,
-          mail: this.form.email,
-          createTime: this.info.createTime,
-          city: this.city
-        }, { root: true })
-        this.form.email=''
-        this.form.code=''
-      },
-      isEmail(value){
-        if (!value) {
-          return '请输入邮箱'
-        }
-        let pattern = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
-        if(!pattern.test(value)){
-          return '输入的邮箱格式错误'
-        }
-        return ''
-      },
-      countDown () {
-        if (!this.canClick) return   //改动的是这两行代码
-        this.canClick = false
-        this.content = this.totalTime + 's后重新发送'
-        let clock = window.setInterval(() => {
-          this.totalTime--
-          this.content = this.totalTime + 's后重新发送'
-          if (this.totalTime < 0) {
-            window.clearInterval(clock)
-            this.content = '重新发送验证码'
-            this.totalTime = 10
-            this.canClick = true   //这里重新开启
-          }
-        }, 1000)
-      }
     },
     computed: {
-
       ...mapState('d2admin/user', [
         'info'
       ])
-
     }
 }
 </script>
