@@ -12,8 +12,6 @@
 <script>
 import axios from 'axios';
 import button from './button'
-import { constants } from 'crypto';
-import { compileFunction } from 'vm';
 
   export default{
     components:{
