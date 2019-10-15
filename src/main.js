@@ -8,6 +8,10 @@ import store from '@/store/index'
 // 多国语
 import i18n from './i18n'
 
+import 'ant-design-vue/dist/antd.css'
+
+import Antd from 'ant-design-vue'
+
 // 菜单和路由设置
 import router from './router'
 import menuHeader from '@/menu/header'
@@ -16,6 +20,8 @@ import { frameInRoutes } from '@/router/routes'
 
 // 核心插件
 Vue.use(d2Admin)
+//ElementUI插件
+Vue.use(ElementUI);
 
 new Vue({
   router,
@@ -45,10 +51,10 @@ new Vue({
 }).$mount('#app')
 
 
-
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import D2Crud from '@d2-projects/d2-crud'
 
 Vue.use(ElementUI)
 Vue.use(D2Crud)
+Vue.use(Antd)

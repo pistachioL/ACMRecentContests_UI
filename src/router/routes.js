@@ -22,6 +22,15 @@ const frameIn = [
         }
       },
       {
+        path: 'comment',
+        name: 'comment',
+        component: () => import('@/pages/comment/index.vue'),
+        meta: {
+          title: '评论区',
+          auth: true
+        }
+      },
+      {
         path: 'user/center',
         name: 'user_center',
         component: () => import('@/pages/user/center'),
