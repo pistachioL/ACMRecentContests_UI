@@ -30,9 +30,11 @@
               <li>
                 安全设置
                 <div style="float:right;">
-                <updateEmail></updateEmail>
-
-<!--                  <a style="float: right">&nbsp;&nbsp;</a>-->
+                  <updateEmail></updateEmail>
+                </div>
+                <a style="float: right">&nbsp;&nbsp;</a>
+                <div style="float: right;">
+                  <update-pwd></update-pwd>
                 </div>
               </li>
             </ul>
@@ -61,10 +63,11 @@
 <script>
 import { mapState} from 'vuex'
 import { regionData, CodeToText } from 'element-china-area-data'
-import updateEmail from "./email";
+import updateEmail from './email'
+import updatePwd from './password'
 
 export default {
-  components: {updateEmail},
+  components: {updateEmail, updatePwd},
   data(){
         return {
           columns: [

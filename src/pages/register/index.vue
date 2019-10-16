@@ -34,12 +34,12 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                  <el-input type="password" v-model="formLogin.password" placeholder="密码" show-password>
+                  <el-input type="password" v-model="formLogin.password" placeholder="密码" clearable show-password>
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password_confirm">
-                  <el-input type="password" v-model="formLogin.password_confirm" placeholder="确认密码" show-password>
+                  <el-input type="password" v-model="formLogin.password_confirm" placeholder="确认密码" clearable show-password>
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
@@ -143,19 +143,25 @@ export default {
       this.time = dayjs().format('HH:mm:ss')
     },
     submit(){
-      this.loginingRegister = true
-      register({
-        username: this.formLogin.username,
-        password: this.formLogin.password,
-        mail: this.formLogin.mail
-      }, this.formLogin.code).then(res =>{
-        this.loginingRegister = false
-        this.$message.success("注册成功")
-        this.$router.push({path:'/login'})
-      }).catch(err =>{
-        this.loginingRegister = false
-        console.log(err)
-      })
+      this.$refs["loginForm"].validate((valid) =>{
+        if(valid){
+          this.loginingRegister = true
+          register({
+            username: this.formLogin.username,
+            password: this.formLogin.password,
+            mail: this.formLogin.mail
+          }, this.formLogin.code).then(res =>{
+            this.loginingRegister = false
+            this.$message.success("注册成功")
+            this.$router.push({path:'/login'})
+          }).catch(err =>{
+            this.loginingRegister = false
+            console.log(err)
+          })
+        }else{
+          this.$message.error("提交失败,请检查是否有未符合要求的信息")
+        }
+      });
     },
     getVerificationCode(){
       let s = this.isEmail(this.formLogin.mail)

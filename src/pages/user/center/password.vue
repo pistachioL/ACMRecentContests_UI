@@ -1,11 +1,11 @@
 <template>
   <div>
     <a @click="dialogFormVisible = true" target="_blank" style="color: #317EF3; text-decoration: underline;
-                  cursor: pointer; float: right">修改邮箱</a>
+                  cursor: pointer; float: right">修改密码</a>
     <el-dialog title="提示" :visible.sync="dialogFormVisible">
       <el-form :model="form" :rules="rules">
 
-        <el-form-item label="请输入原邮箱" prop="email">
+        <el-form-item label="验证邮箱" prop="email">
           <el-input v-model="form.email" autocomplete="off" clearable>
             <el-button :class="{disabled: !this.canClick}" style="color: #409EFF" slot="append" @click="countDown">{{content}}</el-button>
           </el-input>
@@ -15,8 +15,12 @@
           <el-input v-model="form.code" autocomplete="off" clearable></el-input>
         </el-form-item>
 
-        <el-form-item label="请输入新邮箱" prop="code">
-          <el-input v-model="form.newEmail" autocomplete="off" clearable></el-input>
+        <el-form-item label="请输入要重置的密码" prop="password">
+          <el-input type="password" v-model="form.password" autocomplete="off" clearable show-password></el-input>
+        </el-form-item>
+
+        <el-form-item label="请确认密码" prop="password_confirm">
+          <el-input type="password" v-model="form.password_confirm" autocomplete="off" clearable show-password></el-input>
         </el-form-item>
 
       </el-form>
@@ -33,12 +37,22 @@
   import { mapState} from 'vuex'
   export default {
     data() {
+      let validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.form.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
       return {
         dialogFormVisible: false,
         form: {
           email: '',
           code: '',
-          newEmail: ''
+          password: '',
+          password_confirm: ''
         },
         rules: {
           email: [
@@ -46,6 +60,15 @@
           ],
           code: [
             {required: true, message: '请输入验证码', trigger: 'blur'}
+          ],
+          password: [
+            {required: true, message: '请输入密码', trigger: 'blur'}
+          ],
+          password_confirm: [
+            {
+               trigger: 'blur',
+              validator: validatePass
+            }
           ]
         },
         content: '发送验证码',
@@ -73,7 +96,7 @@
         this.dialogFormVisible = false
         await this.$store.dispatch('d2admin/user/set', {
           name: this.info.name,
-          mail: this.form.newEmail,
+          mail: this.form.email,
           createTime: this.info.createTime,
           city: this.city
         }, { root: true })

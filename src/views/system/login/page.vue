@@ -130,7 +130,6 @@ export default {
     submit () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-
           this.lodingLogin = true
           // 登录
           // 注意 这里的演示没有传验证码
@@ -150,9 +149,8 @@ export default {
             this.Captcha()
           })
 
-        } else {
-          // 登录表单校验失败
-          this.$message.error('表单校验失败')
+        } else{
+          this.$message.error("提交失败,请检查是否有未符合要求的信息")
         }
       })
     },
