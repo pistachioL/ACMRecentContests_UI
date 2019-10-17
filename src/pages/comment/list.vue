@@ -30,6 +30,7 @@ export default {
     return {
       data: [
         {
+          
           actions: ['Reply to'],
           author: 'Han Solo',
           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',

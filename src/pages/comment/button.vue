@@ -1,51 +1,49 @@
 <template>
   <div>
- 
-
-
 <!-- 点击按钮 -->
 <el-button type="text,success" @click="dialogFormVisible = true" round>发帖</el-button>
-
 <!-- 弹出框 -->
-<el-dialog title="编辑" :visible.sync="dialogFormVisible">
+<el-dialog title="编辑" :visible.sync="dialogFormVisible" :append-to-body="true">
     <el-form :model="form">
       <el-form-item label="标题" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off"></el-input>
+        <el-input v-model="form.title" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item label="内容" :label-width="formLabelWidth"  >
-        <el-input type="textarea" v-model="form.name" autocomplete="off" :rows="10"></el-input>
+        <el-input type="textarea" v-model="form.content" autocomplete="off" :rows="10"></el-input>
       </el-form-item>
     </el-form>
 
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">发 表</el-button>
+      <el-button type="primary" @click="add"  >发 布</el-button>
     </div>
 </el-dialog>
+
 </div>
+
+
 </template>
 
 <script>
+  import moment from 'moment';
   export default {
+
     data() {
       return {
-  
-      
         dialogFormVisible: false,
         form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          title: '',
+          content: ''
         },
-        formLabelWidth: '120px',
-
-      };
+        formLabelWidth: '50px',
+      }
+    },
+    methods: {
+      add(){
+        this.dialogFormVisible = false
+        this.$emit('add',this.form.title)
+      }
     }
   };
 </script>
