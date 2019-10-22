@@ -1,7 +1,5 @@
 <template>
   <div>
-    <a @click="dialogFormVisible = true" target="_blank" style="color: #317EF3; text-decoration: underline;
-                  cursor: pointer; float: right">修改密码</a>
     <el-dialog title="提示" :visible.sync="dialogFormVisible">
       <el-form :model="form" :rules="rules">
 
@@ -25,8 +23,8 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updateEmail">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="updatePassword">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -92,16 +90,15 @@
           }
         }, 1000)
       },
-      async updateEmail(){
+      updatePassword(){
+
+      },
+      open(){
+        this.dialogFormVisible = true
+      },
+      cancel(){
         this.dialogFormVisible = false
-        await this.$store.dispatch('d2admin/user/set', {
-          name: this.info.name,
-          mail: this.form.email,
-          createTime: this.info.createTime,
-          city: this.city
-        }, { root: true })
-        this.form.email=''
-        this.form.code=''
+        this.$message('取消输入')
       }
     },
     computed: {

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <a @click="dialogFormVisible = true" target="_blank" style="color: #317EF3; text-decoration: underline;
-                  cursor: pointer; float: right">修改邮箱</a>
-    <el-dialog title="提示" :visible.sync="dialogFormVisible">
+<!--    <a @click="dialogFormVisible = true" target="_blank" style="color: #317EF3; text-decoration: underline;-->
+<!--                  cursor: pointer; float: right">修改邮箱</a>-->
+    <el-dialog title="提示" :visible.sync="dialogFormVisible" ref="email">
       <el-form :model="form" :rules="rules">
 
         <el-form-item label="请输入原邮箱" prop="email">
@@ -21,7 +21,7 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="cancel">取 消</el-button>
         <el-button type="primary" @click="updateEmail">确 定</el-button>
       </div>
     </el-dialog>
@@ -69,9 +69,9 @@
           }
         }, 1000)
       },
-      async updateEmail(){
+      updateEmail(){
         this.dialogFormVisible = false
-        await this.$store.dispatch('d2admin/user/set', {
+        this.$store.dispatch('d2admin/user/set', {
           name: this.info.name,
           mail: this.form.newEmail,
           createTime: this.info.createTime,
@@ -79,6 +79,13 @@
         }, { root: true })
         this.form.email=''
         this.form.code=''
+      },
+      open(){
+        this.dialogFormVisible = true
+      },
+      cancel(){
+        this.dialogFormVisible = false
+        this.$message('取消输入')
       }
     },
     computed: {
