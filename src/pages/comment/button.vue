@@ -28,13 +28,13 @@
 <script>
   import moment from 'moment';
   export default {
-
     data() {
       return {
         dialogFormVisible: false,
         form: {
-          title: '',
-          content: ''
+            title: '',
+            content: ''
+            
         },
         formLabelWidth: '50px',
       }

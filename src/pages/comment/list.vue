@@ -25,6 +25,7 @@
 </template>
 <script>
 import moment from 'moment'
+import button from './button'
 export default {
   data () {
     return {
