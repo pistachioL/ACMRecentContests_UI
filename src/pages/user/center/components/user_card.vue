@@ -6,9 +6,9 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb image="https://avatars0.githubusercontent.com/u/35989937?s=64&v=4" :height="'100px'" :width="'100px'" :hoverable="false">
-          <div>Hello</div>
-          {{info.name}}
+        <update-avatar ref="avatar"></update-avatar>
+        <pan-thumb  :image="this.info.avatar"  :height="'100px'" :width="'100px'" :hoverable="false">
+          <el-button type="text" @click="uploadAvatar">修改头像</el-button>
         </pan-thumb>
       </div>
       <div class="box-center">
@@ -57,13 +57,24 @@
 <script>
   import PanThumb from './PanThumb'
   import { mapState} from 'vuex'
+  import updateAvatar from '../dialog/uploadAvatar'
 
   export default {
-    components: {PanThumb},
+    data(){
+      return{
+        userAvatar: ''
+      }
+    },
+    components: {PanThumb, updateAvatar},
     computed: {
       ...mapState('d2admin/user', [
         'info'
       ])
+    },
+    methods:{
+      uploadAvatar(){
+        this.$refs.avatar.open()
+      }
     }
   }
 </script>

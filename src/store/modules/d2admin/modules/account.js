@@ -41,7 +41,9 @@ export default {
             await dispatch('d2admin/user/set', {
               name: res.userInfo.username,
               mail: res.userInfo.mail,
-              createTime: format(new Date(res.userInfo.createTime), "yyyy-MM-dd hh:mm")
+              createTime: format(new Date(res.userInfo.createTime), "yyyy-MM-dd hh:mm"),
+              city: res.userInfo.city,
+              avatar: res.userInfo.avatar
             }, { root: true })
             // 用户登录后从持久化数据加载一系列的设置
             await dispatch('load')

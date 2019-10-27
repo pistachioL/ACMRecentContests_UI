@@ -33,6 +33,9 @@
 <script>
   import {isEmail} from '@/common/emailUtil.js'
   import { mapState} from 'vuex'
+  import { resetpwd } from '@/api/resetpwd'
+  import {getUpdatePasswordCodeAPI, updatePasswordAPI} from '@/api/update/updatePassword'
+
   export default {
     data() {
       let validatePass = (rule, value, callback) => {
@@ -78,20 +81,35 @@
       countDown() {
         if (!this.canClick) return   //改动的是这两行代码
         this.canClick = false
-        this.content = this.totalTime + 's后重新发送'
-        let clock = window.setInterval(() => {
-          this.totalTime--
+        getUpdatePasswordCodeAPI({
+          originalEmail: this.form.email
+        }).then(res =>{
+          this.$message.success("发送到邮箱成功，如果没有收到，请检查垃圾箱")
           this.content = this.totalTime + 's后重新发送'
-          if (this.totalTime < 0) {
-            window.clearInterval(clock)
-            this.content = '重新发送验证码'
-            this.totalTime = 10
-            this.canClick = true   //这里重新开启
-          }
-        }, 1000)
+          let clock = window.setInterval(() => {
+            this.totalTime--
+            this.content = this.totalTime + 's后重新发送'
+            if (this.totalTime < 0) {
+              window.clearInterval(clock)
+              this.content = '重新发送验证码'
+              this.totalTime = 60
+              this.canClick = true   //这里重新开启
+            }
+          }, 1000)
+        }).catch(err =>{
+          this.canClick = true
+        })
+
       },
       updatePassword(){
-
+        updatePasswordAPI({
+          password: this.form.password_confirm,
+          email: this.form.email,
+          code: this.form.code
+        }).then(res =>{
+          this.$message.success("更改成功")
+          this.dialogFormVisible = false
+        })
       },
       open(){
         this.dialogFormVisible = true

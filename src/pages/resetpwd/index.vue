@@ -25,7 +25,7 @@
           <!-- logo -->
           <img class="page-login--logo" src="../../views/system/login/image/login_logo.png">
           <!-- 表单 -->
-          <div class="page-login--form">
+          <div class="page-resetpwd--form">
             <el-card shadow="never">
               <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
                 <el-form-item prop="mail">
@@ -47,7 +47,7 @@
                   <el-input type="text" v-model="formLogin.code" placeholder="验证码">
                     <i slot="prepend" class="fa fa-dot-circle-o"></i>
                     <template slot="append">
-                      <el-button size="default" @click="getVerificationCode" type="primary" class="button-login" :loading="loadingMail">验证邮箱</el-button>
+                      <el-button :class="{disabled: !this.canClick}" size="default" @click="getVerificationCode" type="primary" class="button-login">{{content}}</el-button>
                     </template>
                   </el-input>
                 </el-form-item>
@@ -104,7 +104,6 @@ export default {
         mail: ''
       },
       //密码显示
-      loadingMail: false,
       loadingReset: false,
       // 校验
       rules: {
@@ -123,7 +122,10 @@ export default {
         password_confirm:[
           {validator: validatePass, trigger: 'blur'}
         ]
-      }
+      },
+      content: '发送验证码',
+      totalTime: 60,
+      canClick: true
     }
   },
   mounted () {
@@ -163,23 +165,33 @@ export default {
         });
     },
     getVerificationCode(){
+      if (!this.canClick) return
+      this.canClick = false
       let s = this.isEmail(this.formLogin.mail)
       console.log(s)
       if(s !== ''){
         this.$message.error(s)
         return
       }
-      this.loadingMail = true
       getCode({
         username: this.formLogin.username,
         mail: this.formLogin.mail,
         type: 'resetpwd'
       }).then(res => {
-        this.loadingMail = false
         this.$message.success("发送到邮箱成功，如果没有收到，请检查垃圾箱")
+        this.content = this.totalTime + 's后重试'
+        let clock = window.setInterval(() => {
+          this.totalTime--
+          this.content = this.totalTime + 's后重试'
+          if (this.totalTime < 0) {
+            window.clearInterval(clock)
+            this.content = '重新发送验证码'
+            this.totalTime = 60
+            this.canClick = true   //这里重新开启
+          }
+        }, 1000)
       }).catch(err =>{
-        this.loadingMail = false
-        console.log(err)
+        this.canClick = true
       })
     },
     isEmail(value){
@@ -258,8 +270,8 @@ export default {
     margin-top: -2em;
   }
   // 登录表单
-  .page-login--form {
-    width: 280px;
+  .page-resetpwd--form {
+    width: 340px;
     // 卡片
     .el-card {
       margin-bottom: 15px;

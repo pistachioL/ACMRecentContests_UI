@@ -21,6 +21,7 @@
 <script>
   import { regionData, CodeToText } from 'element-china-area-data'
   import { mapState} from 'vuex'
+  import { upHome } from '@/api/update/updateHome'
 
   export default {
     data () {
@@ -46,14 +47,21 @@
         this.city = s
       },
       updateHome(){
-        this.$store.dispatch('d2admin/user/set', {
-          name: this.info.name,
-          mail: this.info.mail,
-          createTime: this.info.createTime,
+        upHome({
           city: this.city
-        }, { root: true })
-        this.dialogFormVisible = false
-        this.$message.success("修改成功")
+        }).then(res =>{
+          this.$store.dispatch('d2admin/user/set', {
+            name: this.info.name,
+            mail: this.info.mail,
+            createTime: this.info.createTime,
+            city: this.city,
+            avatar: this.info.avatar
+          }, { root: true })
+          this.dialogFormVisible = false
+          this.$message.success("修改成功")
+        }).catch(err =>{
+          this.$message.error("更新失败，请尝试重新登录")
+        })
       },
       open(){
         this.dialogFormVisible = true

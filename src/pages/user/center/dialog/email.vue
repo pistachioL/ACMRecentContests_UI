@@ -31,6 +31,8 @@
 <script>
   import {isEmail} from '@/common/emailUtil.js'
   import { mapState} from 'vuex'
+  import { getUpdateEmailCodeAPI, updateEmailAPI } from '@/api/update/updateEmail'
+
   export default {
     data() {
       return {
@@ -55,30 +57,46 @@
     },
     methods: {
       countDown() {
-        if (!this.canClick) return   //改动的是这两行代码
-        this.canClick = false
-        this.content = this.totalTime + 's后重新发送'
-        let clock = window.setInterval(() => {
-          this.totalTime--
+        if (!this.canClick) return
+        this.canClick = false //改动的是这两行代码
+        getUpdateEmailCodeAPI({
+          originalEmail: this.form.email
+        }).then(res =>{
+          this.$message.success("发送到邮箱成功，如果没有收到，请检查垃圾箱")
           this.content = this.totalTime + 's后重新发送'
-          if (this.totalTime < 0) {
-            window.clearInterval(clock)
-            this.content = '重新发送验证码'
-            this.totalTime = 10
-            this.canClick = true   //这里重新开启
-          }
-        }, 1000)
+          let clock = window.setInterval(() => {
+            this.totalTime--
+            this.content = this.totalTime + 's后重新发送'
+            if (this.totalTime < 0) {
+              window.clearInterval(clock)
+              this.content = '重新发送验证码'
+              this.totalTime = 60
+              this.canClick = true   //这里重新开启
+            }
+          }, 1000)
+        }).catch(err =>{
+          this.canClick = true
+        })
+
       },
       updateEmail(){
-        this.dialogFormVisible = false
-        this.$store.dispatch('d2admin/user/set', {
-          name: this.info.name,
-          mail: this.form.newEmail,
-          createTime: this.info.createTime,
-          city: this.city
-        }, { root: true })
-        this.form.email=''
-        this.form.code=''
+        updateEmailAPI({
+          originalEmail: this.form.email,
+          code: this.form.code,
+          newEmail: this.form.newEmail
+        }).then(res =>{
+          this.dialogFormVisible = false
+          this.$store.dispatch('d2admin/user/set', {
+            name: this.info.name,
+            mail: this.form.newEmail,
+            createTime: this.info.createTime,
+            city: this.info.city,
+            avatar: this.info.avatar
+          }, { root: true })
+          this.form.email=''
+          this.form.code=''
+          this.$message.success("更改成功")
+        })
       },
       open(){
         this.dialogFormVisible = true

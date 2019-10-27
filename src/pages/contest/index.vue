@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 import button from './button'
 
   export default{

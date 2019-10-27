@@ -2,6 +2,7 @@
     <el-col>
       <h5>设置中心</h5>
       <update-home ref="home"></update-home>
+      <update-avatar ref="avatar"/>
       <el-menu
               default-active="1"
               class="el-menu-vertical-demo">
@@ -14,6 +15,8 @@
             <el-menu-item class='el-icon-edit' index="1-1" @click="updateName">修改姓名</el-menu-item>
             <br/>
             <el-menu-item class='el-icon-location-outline' index="1-2" @click="updateHome">修改家乡</el-menu-item>
+            <br/>
+            <el-menu-item class='el-icon-magic-stick' index="1-3" @click="updateAvatar">修改头像</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="2">
@@ -35,12 +38,14 @@
 
 <script>
   import { mapState} from 'vuex'
+  import { updateUserName } from '@/api/update/updateUserName'
   import updateEmail from '../dialog/email'
   import updateHome from '../dialog/cascader'
   import updatePassword from '../dialog/password'
+  import updateAvatar from '../dialog/uploadAvatar'
 
   export default {
-    components: {updateEmail, updateHome, updatePassword},
+    components: {updateEmail, updateHome, updatePassword, updateAvatar},
     data(){
       return{
 
@@ -52,16 +57,21 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ value }) => {
-          this.$message({
-            type: 'success',
-            message: '你的姓名更新为: ' + value
-          });
-          this.$store.dispatch('d2admin/user/set', {
-            name: value,
-            mail: this.info.mail,
-            createTime: this.info.createTime,
-            city: this.city
-          }, { root: true })
+          updateUserName({
+              username: value
+          }).then(res =>{
+            console.log(res)
+            this.$message.success('你的姓名更新为: ' + value)
+            this.$store.dispatch('d2admin/user/set', {
+              name: value,
+              mail: this.info.mail,
+              createTime: this.info.createTime,
+              city: this.info.city,
+              avatar: this.info.avatar
+            }, { root: true })
+          }).catch(err =>{
+            this.$message.error("更新失败，请尝试重新登录")
+          })
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -77,6 +87,9 @@
       },
       updatePassword(){
         this.$refs.password.open()
+      },
+      updateAvatar(){
+        this.$refs.avatar.open()
       }
 
     },

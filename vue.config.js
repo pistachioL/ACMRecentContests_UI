@@ -12,19 +12,20 @@ process.env.VUE_APP_BUILD_TIME = require('dayjs')().format('YYYY-M-D HH:mm:ss')
 let publicPath = '/'
 
 module.exports = {
-  publicPath, // 根据你的实际情况更改这里
+  publicPath : '/', // 根据你的实际情况更改这里
   lintOnSave: true,
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8081',
+      '/upload': {
+        target: 'https://sm.ms/api/v2/upload',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          '^/upload': ''
         }
       }
-    }
+    },
+    disableHostCheck: true
   },
   css: {
     loaderOptions: {
