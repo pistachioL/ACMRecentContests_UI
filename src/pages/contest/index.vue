@@ -29,7 +29,9 @@ import button from './button'
             { text: 'NowCoder', value: 'NowCoder' },
             { text: 'CodeForces', value: 'CoderForces' },
             { text: 'CodeChef', value: 'CodeChef' },
-            { text: 'Atcoder', value: 'Atcoder' }
+            { text: 'Atcoder', value: 'Atcoder' },
+            { text: '杭电', value: '杭电' },
+            { text: '洛谷', value: '洛谷' }
             ],
             filterMethod (value, row) {
               console.log(value);
