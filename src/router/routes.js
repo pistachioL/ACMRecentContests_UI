@@ -26,8 +26,15 @@ const frameIn = [
         name: 'user_center',
         component: () => import('@/pages/user/center'),
         meta: {
-          title: '个人中心',
-          auth: true
+          title: '个人中心'
+        }
+      },
+      {
+        path: 'user/remind',
+        name: 'user_remind',
+        component: () => import('@/pages/user/remind'),
+        meta: {
+          title: '赛事提醒'
         }
       },
       // 系统 前端日志

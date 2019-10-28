@@ -1,17 +1,17 @@
 <template>
   <d2-container>
     <d2-crud
-    ref="d2Crud"
-    :columns="columns"
-    :data="tableData"
-    :options="options"
-    :loading="loading"/>
+      ref="d2Crud"
+      :columns="columns"
+      :data="tableData"
+      :options="options"
+      :loading="loading"/>
   </d2-container>
 </template>
 
 <script>
-import axios from 'axios'
-import button from './button'
+  import axios from 'axios'
+  import button from './button'
 
   export default{
     components:{
@@ -67,10 +67,10 @@ import button from './button'
     },
     methods: {
       getData(){
-        let api = 'https://greenhathg.co/api/contests'
+        let api = 'https://greenhathg.co/api/v1/contests'
         axios.get(api).then((response)=>{
           this.loading = false
-          this.tableData=response.data;
+          this.tableData=response.data.data;
         }).catch((error)=>{
           console.log(error);
         }).finally(()=>{
