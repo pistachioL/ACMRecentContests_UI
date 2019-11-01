@@ -1,6 +1,6 @@
 <template>
     <el-dialog title="填写提醒相关信息" :visible.sync="dialogFormVisible">
-        <el-form ref="form" :model="sizeForm" label-width="80px" :rules="rules">
+        <el-form ref="form" :model="sizeForm" label-width="80px">
           <el-form-item label="提醒时间">
             <el-col :span="11">
               <el-date-picker placeholder="选择日期" v-model="sizeForm.date1"
@@ -28,7 +28,9 @@
     </el-dialog>
 </template>
 <script>
+  import {isEmail} from '@/common/emailUtil.js'
   import { setRemind } from '@/api/remind/remind'
+
   export default {
     data() {
       return {
@@ -71,15 +73,9 @@
             }
           }]
         },
-        item: {},
-        rules: {
-          email: [
-            {required: true, message: '请输入邮箱', trigger: 'blur'}
-          ]
-        }
+        item: {}
       };
     },
-
     methods: {
       open(item){
         this.item = item
@@ -90,9 +86,26 @@
         this.$message('取消输入')
       },
       addRemindInfo(){
+        if(this.sizeForm.date1 === '' || this.sizeForm.date2 === ''){
+          this.$message.error("请选择日期")
+          return
+        }
+        if(this.sizeForm.resource === ''){
+          this.$message.error("请选择推送方式")
+          return
+        }
+        if(this.sizeForm.contact === ''){
+          this.$message.error("请输入联系方式")
+          return
+        }
         let type = 0
         if(this.sizeForm.resource === '邮箱'){
-            type = 1
+          let s = isEmail(this.sizeForm.contact)
+          if(s !== ''){
+            this.$message.error(s)
+            return
+          }
+          type = 1
         }
         setRemind({
           remindDate: this.sizeForm.date1 + ' ' + this.sizeForm.date2,
@@ -109,6 +122,7 @@
       }
     },
     components:{
+      isEmail
     }
   }
 </script>
