@@ -1,14 +1,15 @@
 <template>
     <el-dialog title="填写提醒相关信息" :visible.sync="dialogFormVisible">
-        <el-form ref="form" :model="sizeForm" label-width="80px">
+        <el-form ref="form" :model="sizeForm" label-width="80px" :rules="rules">
           <el-form-item label="提醒时间">
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="sizeForm.date1"
-                              style="width: 100%;" :picker-options="pickerOptions"></el-date-picker>
+              <el-date-picker placeholder="选择日期" v-model="sizeForm.date1"
+                              style="width: 100%;" :picker-options="pickerOptions" value-format="yyyy-MM-dd"></el-date-picker>
             </el-col>
             <el-col class="line" :span="2">-</el-col>
             <el-col :span="11">
-              <el-time-picker placeholder="选择时间" v-model="sizeForm.date2" style="width: 100%;"></el-time-picker>
+              <el-time-picker placeholder="选择时间" v-model="sizeForm.date2" style="width: 100%;"
+                    value-format="HH:mm:ss"></el-time-picker>
             </el-col>
           </el-form-item>
           <el-form-item label="推送方式">
@@ -16,17 +17,18 @@
               <el-radio border label="邮箱"></el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="联系方式">
+          <el-form-item label="联系方式" prop="email">
               <el-input v-model="sizeForm.contact" placeholder="请输入内容" clearable></el-input>
           </el-form-item>
         </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="updateEmail">确 定</el-button>
+        <el-button type="primary" @click="addRemindInfo">确 定</el-button>
       </div>
     </el-dialog>
 </template>
 <script>
+  import { setRemind } from '@/api/remind/remind'
   export default {
     data() {
       return {
@@ -69,16 +71,41 @@
             }
           }]
         },
+        item: {},
+        rules: {
+          email: [
+            {required: true, message: '请输入邮箱', trigger: 'blur'}
+          ]
+        }
       };
     },
 
     methods: {
-      open(){
+      open(item){
+        this.item = item
         this.dialogFormVisible = true
       },
       cancel(){
         this.dialogFormVisible = false
         this.$message('取消输入')
+      },
+      addRemindInfo(){
+        let type = 0
+        if(this.sizeForm.resource === '邮箱'){
+            type = 1
+        }
+        setRemind({
+          remindDate: this.sizeForm.date1 + ' ' + this.sizeForm.date2,
+          type: type,
+          contact: this.sizeForm.contact,
+          contest: this.item
+        }).then(res =>{
+          this.dialogFormVisible = false
+          this.$message.success("设置成功")
+        }).catch(err =>{
+          this.dialogFormVisible = false
+          this.$message.error("设置失败，请稍后再试")
+        })
       }
     },
     components:{

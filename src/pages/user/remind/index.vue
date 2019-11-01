@@ -6,7 +6,7 @@
         <el-timeline-item v-for="(val, key, index) in contests"
                           :timestamp="key" placement="top">
           <el-card v-for="item in val">
-            <el-link type="primary" class="el-icon-alarm-clock" @click="openForm" :underline="false"></el-link>
+            <el-link type="primary" class="el-icon-alarm-clock" @click="openForm(item)" :underline="false"></el-link>
             <h4><i class="el-icon-s-opportunity"></i>{{item.name}}</h4>
             <p>
               <i class="el-icon-time"></i>{{item.startTime}} {{item.week}}&#8195;&#8195;
@@ -31,8 +31,8 @@ import Form from './dialog/form'
       }
     },
     methods:{
-      openForm(){
-        this.$refs.dataForm.open()
+      openForm(item){
+        this.$refs.dataForm.open(item)
       }
     },
     mounted() {
