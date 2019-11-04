@@ -13,41 +13,46 @@ const frameIn = [
     component: layoutHeaderAside,
     children: [
       // 首页
-      // {
-      //   path: 'index',
-      //   name: 'index',
-      //   meta: {
-      //     auth: true
-      //   },
-      //   component: _import('system/index')
-      // },
-      // 演示页面
       {
-        path: 'page1',
-        name: 'page1',
+        path: 'index',
+        name: 'index',
+        component: () => import('@/pages/contest'),
         meta: {
-          title: '页面 1',
-          auth: true
-        },
-        component: _import('demo/page1')
+          title: '最近比赛信息'
+        }
       },
       {
-        path: 'page2',
-        name: 'page2',
+        path: 'comment',
+        name: 'comment',
+        component: () => import('@/pages/comment/index.vue'),
         meta: {
-          title: '页面 2',
-          auth: true
-        },
-        component: _import('demo/page2')
+          title: '赛事论坛',
+
+        }
       },
       {
-        path: 'page3',
-        name: 'page3',
+        path: 'comment/detail/:aid',
+        name: 'detail',
+        component: () => import('@/pages/comment/detail.vue'),
         meta: {
-          title: '页面 3',
-          auth: true
-        },
-        component: _import('demo/page3')
+          title: '贴文详情',
+        }
+      },
+      {
+        path: 'user/center',
+        name: 'user_center',
+        component: () => import('@/pages/user/center'),
+        meta: {
+          title: '个人中心'
+        }
+      },
+      {
+        path: 'user/remind',
+        name: 'user_remind',
+        component: () => import('@/pages/user/remind'),
+        meta: {
+          title: '赛事提醒'
+        }
       },
       // 系统 前端日志
       {
@@ -72,15 +77,6 @@ const frameIn = [
         name: 'redirect',
         hidden: true,
         component: _import('system/function/redirect')
-      },
-      {
-        path: 'index',
-        name: 'index',
-        component: () => import('@/pages/contest'),
-        meta: {
-          auth: true,
-          title: '最近比赛信息'
-        }
       }
     ]
   }
@@ -95,6 +91,16 @@ const frameOut = [
     path: '/login',
     name: 'login',
     component: _import('system/login')
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('@/pages/register')
+  },
+  {
+    path: '/resetpwd',
+    name: 'resetpwd',
+    component: () => import('@/pages/resetpwd')
   }
 ]
 

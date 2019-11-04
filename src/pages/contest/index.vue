@@ -1,17 +1,17 @@
 <template>
   <d2-container>
-    <!-- 显示的表格配置 -->
     <d2-crud
-    ref="d2Crud"
-    :columns="columns"
-    :data="tableData"
-    :options="options"/>
+      ref="d2Crud"
+      :columns="columns"
+      :data="tableData"
+      :options="options"
+      :loading="loading"/>
   </d2-container>
 </template>
 
 <script>
-import axios from 'axios';
-import button from './button'
+  import axios from 'axios'
+  import button from './button'
 
   export default{
     components:{
@@ -20,6 +20,7 @@ import button from './button'
     data(){
       return{
         tableData:[],
+        loading: true,
         columns: [
           {
             key: 'oj', title: '平台', minWidth: 60, align: 'center', resizable: true,
@@ -28,7 +29,9 @@ import button from './button'
             { text: 'NowCoder', value: 'NowCoder' },
             { text: 'CodeForces', value: 'CoderForces' },
             { text: 'CodeChef', value: 'CodeChef' },
-            { text: 'Atcoder', value: 'Atcoder' }
+            { text: 'Atcoder', value: 'Atcoder' },
+            { text: '杭电', value: '杭电' },
+            { text: '洛谷', value: '洛谷' }
             ],
             filterMethod (value, row) {
               console.log(value);
@@ -37,7 +40,7 @@ import button from './button'
             },
             filterPlacement: 'bottom-end'
           },
-          {key: 'name', title: '比赛', minWidth: 150, align: 'center', resizable: true, sortable: true},
+          {key: 'name', title: '比赛', tooltip: true, align: 'center', resizable: true, sortable: true},
           {key: 'startTime', title: '开始时间', align: 'center', resizable: true, sortable: true},
           {key: 'endTime', title: '结束时间', align: 'center', resizable: true, sortable: true},
           {key: 'length', title: '时长', align: 'center', resizable: true, sortable: true},
@@ -50,7 +53,6 @@ import button from './button'
           }
         ],
         options: {
-          height:448,
           stripe: true,
           highlightCurrentRow: true,
           headerCellStyle: {
@@ -65,9 +67,10 @@ import button from './button'
     },
     methods: {
       getData(){
-        var api = 'https://greenhathg.co/api/contests'
+        let api = 'https://greenhathg.co/api/v1/contests'
         axios.get(api).then((response)=>{
-          this.tableData=response.data;
+          this.loading = false
+          this.tableData=response.data.data;
         }).catch((error)=>{
           console.log(error);
         }).finally(()=>{
@@ -76,40 +79,48 @@ import button from './button'
     },
     mounted(){
       this.getData();
-    }
+      this.$nextTick(() => {
+        let self = this;
+        this.options.height = window.innerHeight - this.$refs.d2Crud.$refs.elTable.$el.offsetHeight - 55;
 
+        window.onresize = function() {
+            self.options.height = window.innerHeight - this.$refs.d2Crud.$refs.elTable.$el.offsetHeight - 55;
+        }
+    })
+    }
   }
 
 </script>
 
 <style>
-.el-table .warning-row {
-  background: oldlace;
-}
 
-.el-table .success-row {
-  background: #f0f9eb;
-}
-
-.el-table td,
-.el-table th.is-leaf {
-        border-bottom: 1px solid rgb(128, 102, 160);
-}
-
-.el-table::before{
-   border-bottom:  1px solid rgb(128, 102, 160);
+  .el-table .warning-row {
+    background: oldlace;
   }
 
-.el-table::after{
-  border-bottom:  1px solid rgb(128, 102, 160);
-}
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
 
-.el-table--border, .el-table--group{
-  border-bottom:  1px solid rgb(128, 102, 160);
-}
+  .el-table td,
+  .el-table th.is-leaf {
+          border-bottom: 1px solid rgb(128, 102, 160);
+  }
 
-.el-table__header-wrapper th:nth-last-of-type(2){
-  border-bottom:  1px solid rgb(128, 102, 160);
-}
+  .el-table::before{
+    border-bottom:  1px solid rgb(128, 102, 160);
+    }
+
+  .el-table::after{
+    border-bottom:  1px solid rgb(128, 102, 160);
+  }
+
+  .el-table--border, .el-table--group{
+    border-bottom:  1px solid rgb(128, 102, 160);
+  }
+
+  .el-table__header-wrapper th:nth-last-of-type(2){
+    border-bottom:  1px solid rgb(128, 102, 160);
+  }
 
 </style>
