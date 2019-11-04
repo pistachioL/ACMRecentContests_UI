@@ -85,7 +85,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   span.vicp-hint {
     white-space: pre-wrap;
   }

@@ -7,3 +7,42 @@ export function setRemind (data) {
     params: data
   })
 }
+
+export function getRemindInfos() {
+  return request({
+    url: '/remind/remind_infos',
+    method: 'get'
+  })
+}
+
+export function delRemindInfo(data) {
+  return request({
+    url: '/remind/name',
+    method: 'delete',
+    params: data
+  })
+}
+
+export function updateRemindInfo(data) {
+  return request({
+    url: '/remind/info',
+    method: 'put',
+    params: data
+  })
+}
+
+export function pauseRemind(data) {
+  return request({
+    url: '/remind/pause',
+    method: 'post',
+    params: data
+  })
+}
+
+export function resumeRemind(data) {
+  return request({
+    url: '/remind/resume',
+    method: 'post',
+    params: data
+  })
+}

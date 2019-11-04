@@ -1,12 +1,12 @@
 <template>
     <el-dialog title="填写提醒相关信息" :visible.sync="dialogFormVisible">
         <el-form ref="form" :model="sizeForm" label-width="80px">
-          <el-form-item label="提醒时间">
+          <el-form-item label="提醒时间" style="text-align: center;">
             <el-col :span="11">
               <el-date-picker placeholder="选择日期" v-model="sizeForm.date1"
                               style="width: 100%;" :picker-options="pickerOptions" value-format="yyyy-MM-dd"></el-date-picker>
             </el-col>
-            <el-col class="line" :span="2">-</el-col>
+            <el-col class="line" :span="2" >-</el-col>
             <el-col :span="11">
               <el-time-picker placeholder="选择时间" v-model="sizeForm.date2" style="width: 100%;"
                     value-format="HH:mm:ss"></el-time-picker>
@@ -14,7 +14,7 @@
           </el-form-item>
           <el-form-item label="推送方式">
             <el-radio-group v-model="sizeForm.resource" size="medium">
-              <el-radio border label="邮箱"></el-radio>
+              <el-radio border label="1">邮箱</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="联系方式" prop="email">
@@ -39,11 +39,11 @@
           contact: '',
           date1: '',
           date2: '',
-          resource: ''
+          resource: '1'
         },
         pickerOptions: {
           disabledDate(time) {
-            return time.getTime() < Date.now();
+            return time.getTime() < Date.now() - 8.64e7;
           },
           shortcuts: [{
             text: '今天',
@@ -98,18 +98,9 @@
           this.$message.error("请输入联系方式")
           return
         }
-        let type = 0
-        if(this.sizeForm.resource === '邮箱'){
-          let s = isEmail(this.sizeForm.contact)
-          if(s !== ''){
-            this.$message.error(s)
-            return
-          }
-          type = 1
-        }
         setRemind({
           remindDate: this.sizeForm.date1 + ' ' + this.sizeForm.date2,
-          type: type,
+          type: this.sizeForm.resource,
           contact: this.sizeForm.contact,
           contest: this.item
         }).then(res =>{
@@ -117,7 +108,6 @@
           this.$message.success("设置成功")
         }).catch(err =>{
           this.dialogFormVisible = false
-          this.$message.error("设置失败，请稍后再试")
         })
       }
     },
@@ -126,9 +116,3 @@
     }
   }
 </script>
-
-<style>
-  .el-col-2{
-    text-align: center;
-  }
-</style>

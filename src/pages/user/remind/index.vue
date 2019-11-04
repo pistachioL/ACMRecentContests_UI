@@ -45,7 +45,7 @@ import Form from './dialog/form'
     }
   }
 </script>
-<style>
+<style scoped>
   .el-icon-alarm-clock{
     float: right;
     font-size: 200%;

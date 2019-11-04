@@ -26,7 +26,8 @@ const frameIn = [
         name: 'user_center',
         component: () => import('@/pages/user/center'),
         meta: {
-          title: '个人中心'
+          title: '个人中心',
+          auth: true
         }
       },
       {
@@ -34,18 +35,9 @@ const frameIn = [
         name: 'user_remind',
         component: () => import('@/pages/user/remind'),
         meta: {
-          title: '赛事提醒'
-        }
-      },
-      // 系统 前端日志
-      {
-        path: 'log',
-        name: 'log',
-        meta: {
-          title: '前端日志',
+          title: '赛事提醒',
           auth: true
-        },
-        component: _import('system/log')
+        }
       },
       // 刷新页面 必须保留
       {

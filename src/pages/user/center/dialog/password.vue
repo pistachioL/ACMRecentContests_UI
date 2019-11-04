@@ -127,7 +127,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 
   .disabled{
     background-color: #ddd;
