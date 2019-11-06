@@ -52,7 +52,7 @@
           name: this.info.name,
           mail: this.info.mail,
           createTime: this.info.createTime,
-          city: this.city,
+          city: this.info.city,
           avatar: avatar
         }, { root: true })
         updateAvatar({

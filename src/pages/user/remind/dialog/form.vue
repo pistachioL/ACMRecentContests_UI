@@ -18,7 +18,11 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="联系方式" prop="email">
-              <el-input v-model="sizeForm.contact" placeholder="请输入内容" clearable></el-input>
+              <el-autocomplete
+                      v-model="sizeForm.contact"
+                      placeholder="请输入内容"
+                      :fetch-suggestions="querySearch"
+                      clearable></el-autocomplete>
           </el-form-item>
         </el-form>
       <div slot="footer" class="dialog-footer">
@@ -30,7 +34,7 @@
 <script>
   import {isEmail} from '@/common/emailUtil.js'
   import { setRemind } from '@/api/remind/remind'
-
+  import {setIntoStorage} from '@/common/inputHistoryUtil.js'
   export default {
     data() {
       return {
@@ -73,7 +77,10 @@
             }
           }]
         },
-        item: {}
+        item: {},
+        email: [{
+          value: ''
+        }]
       };
     },
     methods: {
@@ -98,6 +105,13 @@
           this.$message.error("请输入联系方式")
           return
         }
+        let s = isEmail(this.sizeForm.contact)
+        if(s !== ''){
+          this.$message.error(s)
+          return
+        }
+
+        setIntoStorage(this.sizeForm.contact)
         setRemind({
           remindDate: this.sizeForm.date1 + ' ' + this.sizeForm.date2,
           type: this.sizeForm.resource,
@@ -109,10 +123,10 @@
         }).catch(err =>{
           this.dialogFormVisible = false
         })
+      },
+      querySearch(queryString ,cb){
+        cb(JSON.parse(localStorage.getItem('email')))
       }
-    },
-    components:{
-      isEmail
     }
   }
 </script>

@@ -19,7 +19,11 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="联系方式" prop="email">
-          <el-input v-model="sizeForm.contact" clearable></el-input>
+          <el-autocomplete
+                  v-model="sizeForm.contact"
+                  placeholder="请输入内容"
+                  :fetch-suggestions="querySearch"
+                  clearable></el-autocomplete>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -75,7 +79,10 @@
             }
           }]
         },
-        name: ''
+        name: '',
+        email: [{
+          value: ''
+        }]
       };
     },
     methods: {
@@ -104,6 +111,12 @@
           this.$message.error("请输入联系方式")
           return
         }
+        let s = isEmail(this.sizeForm.contact)
+        if(s !== ''){
+          this.$message.error(s)
+          return
+        }
+        setIntoStorage(this.sizeForm.contact)
         axios.get('https://greenhathg.co/api/v1/contests/name', {
           params: {
             name: this.name
@@ -129,10 +142,10 @@
           this.$message.error("设置失败,请重试")
           return
         })
+      },
+      querySearch(queryString ,cb){
+        cb(JSON.parse(localStorage.getItem('email')))
       }
-    },
-    components:{
-      isEmail
     }
   }
 </script>

@@ -169,7 +169,6 @@ export default {
       if (!this.canClick) return
       this.canClick = false
       let s = this.isEmail(this.formLogin.mail)
-      console.log(s)
       if(s !== ''){
         this.$message.error(s)
         return

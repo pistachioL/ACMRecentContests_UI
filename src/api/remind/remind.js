@@ -23,6 +23,14 @@ export function delRemindInfo(data) {
   })
 }
 
+export function delRemindInfos(data) {
+  return request({
+    url: '/remind/names',
+    method: 'delete',
+    data
+  })
+}
+
 export function updateRemindInfo(data) {
   return request({
     url: '/remind/info',
