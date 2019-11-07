@@ -5,7 +5,7 @@
 
         <el-form-item label="验证邮箱" prop="email">
           <el-input v-model="form.email" autocomplete="off" clearable maxlength="30" show-word-limit>
-            <el-button :class="{disabled: !this.canClick}" style="color: #409EFF" slot="append" @click="countDown">{{content}}</el-button>
+            <el-button :class="{disabled: !this.canClick}" style="color: #409EFF" slot="append" @click="countDown" :loading="lodingState">{{content}}</el-button>
           </el-input>
         </el-form-item>
 
@@ -74,22 +74,26 @@
         },
         content: '发送验证码',
         totalTime: 60,
-        canClick: true
+        canClick: true,
+        lodingState: false
       }
     },
     methods: {
       countDown() {
+        this.lodingState = true
         if (!this.canClick) return   //改动的是这两行代码
         this.canClick = false
         getUpdatePasswordCodeAPI({
           originalEmail: this.form.email
         }).then(res =>{
+          this.lodingState = false
           this.$message.success("发送到邮箱成功，如果没有收到，请检查垃圾箱")
           this.content = this.totalTime + 's后重新发送'
           let clock = window.setInterval(() => {
             this.totalTime--
             this.content = this.totalTime + 's后重新发送'
             if (this.totalTime < 0) {
+              this.lodingState = false
               window.clearInterval(clock)
               this.content = '重新发送验证码'
               this.totalTime = 60
@@ -97,6 +101,7 @@
             }
           }, 1000)
         }).catch(err =>{
+          this.lodingState = false
           this.canClick = true
         })
 

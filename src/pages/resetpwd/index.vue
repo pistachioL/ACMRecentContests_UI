@@ -47,11 +47,11 @@
                   <el-input type="text" v-model="formLogin.code" placeholder="验证码" maxlength="6" show-word-limit>
                     <i slot="prepend" class="fa fa-dot-circle-o"></i>
                     <template slot="append">
-                      <el-button :class="{disabled: !this.canClick}" size="default" @click="getVerificationCode" type="primary" class="button-login">{{content}}</el-button>
+                      <el-button :class="{disabled: !this.canClick}" size="default" @click="getVerificationCode" type="primary" class="button-login" :loading="lodingState">{{content}}</el-button>
                     </template>
                   </el-input>
                 </el-form-item>
-                <el-button size="default" @click="submit" type="primary" class="button-login" :loading="loadingReset">重置密码</el-button>
+                <el-button size="default" @click="submit" type="primary" class="button-login">重置密码</el-button>
               </el-form>
             </el-card>
             <p
@@ -125,7 +125,8 @@ export default {
       },
       content: '发送验证码',
       totalTime: 60,
-      canClick: true
+      canClick: true,
+      lodingState: false
     }
   },
   mounted () {
@@ -165,6 +166,7 @@ export default {
         });
     },
     getVerificationCode(){
+      this.lodingState = true
       if (!this.canClick) return
       this.canClick = false
       let s = this.isEmail(this.formLogin.mail)
@@ -178,12 +180,14 @@ export default {
         mail: this.formLogin.mail,
         type: 'resetpwd'
       }).then(res => {
+        this.lodingState = false
         this.$message.success("发送到邮箱成功，如果没有收到，请检查垃圾箱")
         this.content = this.totalTime + 's后重试'
         let clock = window.setInterval(() => {
           this.totalTime--
           this.content = this.totalTime + 's后重试'
           if (this.totalTime < 0) {
+            this.lodingState = false
             window.clearInterval(clock)
             this.content = '重新发送验证码'
             this.totalTime = 60
@@ -191,6 +195,7 @@ export default {
           }
         }, 1000)
       }).catch(err =>{
+        this.lodingState = false
         this.canClick = true
       })
     },

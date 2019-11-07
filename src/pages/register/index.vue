@@ -52,7 +52,7 @@
                   <el-input type="text" v-model="formLogin.code" placeholder="验证码" maxlength="6" show-word-limit>
                     <i slot="prepend" class="fa fa-dot-circle-o"></i>
                     <template slot="append" >
-                      <el-button size="default" @click="getVerificationCode" type="primary" :class="{disabled: !this.canClick}">{{content}}</el-button>
+                      <el-button size="default" @click="getVerificationCode" type="primary" :class="{disabled: !this.canClick}" :loading="lodingState">{{content}}</el-button>
                     </template>
                   </el-input>
                 </el-form-item>
@@ -129,7 +129,8 @@ export default {
       },
       content: '发送验证码',
       totalTime: 60,
-      canClick: true
+      canClick: true,
+      lodingState: false
     }
   },
   mounted () {
@@ -167,6 +168,7 @@ export default {
       });
     },
     getVerificationCode(){
+      this.lodingState = true
       if (!this.canClick) return
       this.canClick = false
       let s = this.isEmail(this.formLogin.mail)
@@ -179,6 +181,7 @@ export default {
         mail: this.formLogin.mail,
         type: 'register'
       }).then(res => {
+        this.lodingState = false
         this.$message.success("发送到邮箱成功，如果没有收到，请检查垃圾箱")
         this.content = this.totalTime + 's后重试'
         let clock = window.setInterval(() => {
@@ -192,6 +195,7 @@ export default {
           }
         }, 1000)
       }).catch(err =>{
+        this.lodingState = false
         this.canClick = true
       })
     },
