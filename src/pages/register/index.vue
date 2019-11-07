@@ -151,8 +151,9 @@ export default {
           register({
             username: this.formLogin.username,
             password: this.formLogin.password,
-            mail: this.formLogin.mail
-          }, this.formLogin.code).then(res =>{
+            mail: this.formLogin.mail,
+            code: this.formLogin.code
+          }).then(res =>{
             this.loginingRegister = false
             this.$message.success("注册成功")
             this.$router.push({path:'/login'})
