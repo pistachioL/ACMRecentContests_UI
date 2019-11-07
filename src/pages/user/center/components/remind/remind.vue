@@ -26,25 +26,26 @@
             title: '日期',
             key: 'sendDate',
             showOverflowTooltip: true,
-            sortable: true,
-            minWidth: 110
+            sortable: true
           },
           {
             title: '名字',
             key: 'name',
             showOverflowTooltip: true,
-            minWidth: 200
+            minWidth: 150
           },
           {
-            title: '接收方式',
+            title: '方式',
             key: 'type',
+            minWidth: 50
           },
           {
             title: '状态',
             key: 'state',
+            minWidth: 50
           },
           {
-            minWidth: 100,
+            width: 120,
             title: '操作',
             key: 'operating',
             component: {
@@ -77,7 +78,7 @@
         this.deleteList = selection
       },
       deleteInfo(){
-        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除记录, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
