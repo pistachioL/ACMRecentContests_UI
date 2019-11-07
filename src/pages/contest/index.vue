@@ -25,17 +25,16 @@
           {
             key: 'oj', title: '平台', minWidth: 60, align: 'center', resizable: true,
             filters: [
-            { text: '计蒜客', value: '计蒜客' },
-            { text: 'NowCoder', value: 'NowCoder' },
-            { text: 'CodeForces', value: 'CoderForces' },
-            { text: 'CodeChef', value: 'CodeChef' },
-            { text: 'Atcoder', value: 'Atcoder' },
-            { text: '杭电', value: '杭电' },
-            { text: '洛谷', value: '洛谷' }
+              { text: 'Atcoder', value: 'Atcoder' },
+              { text: 'Bestcoder', value: 'Bestcoder' },
+              { text: 'CodeChef', value: 'CodeChef' },
+              { text: 'CodeForces', value: 'CoderForces' },
+              { text: 'Hdu', value: 'Hdu' },
+              { text: 'Luogu', value: 'Luogu' },
+              { text: '牛客', value: '牛客' },
+              { text: '计蒜客', value: '计蒜客' }
             ],
             filterMethod (value, row) {
-              console.log(value);
-              console.log(row);
                return row.oj === value
             },
             filterPlacement: 'bottom-end'

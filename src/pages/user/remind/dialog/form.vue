@@ -22,6 +22,8 @@
                       v-model="sizeForm.contact"
                       placeholder="请输入内容"
                       :fetch-suggestions="querySearch"
+                      maxlength="30"
+                      show-word-limit
                       clearable></el-autocomplete>
           </el-form-item>
         </el-form>
@@ -130,3 +132,9 @@
     }
   }
 </script>
+
+<style>
+  .el-input__count-inner {
+    background: rgba(255, 255, 255, 0);
+  }
+</style>

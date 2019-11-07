@@ -6,17 +6,17 @@
       <el-form :model="form" :rules="rules">
 
         <el-form-item label="请输入原邮箱" prop="email">
-          <el-input v-model="form.email" autocomplete="off" clearable>
+          <el-input v-model="form.email" autocomplete="off" clearable maxlength="30" show-word-limit>
             <el-button :class="{disabled: !this.canClick}" style="color: #409EFF" slot="append" @click="countDown">{{content}}</el-button>
           </el-input>
         </el-form-item>
 
-        <el-form-item label="请输入验证码" prop="code">
-          <el-input v-model="form.code" autocomplete="off" clearable></el-input>
+        <el-form-item label="请输入验证码" prop="code" >
+          <el-input v-model="form.code" autocomplete="off" clearable maxlength="6" show-word-limit></el-input>
         </el-form-item>
 
         <el-form-item label="请输入新邮箱" prop="code">
-          <el-input v-model="form.newEmail" autocomplete="off" clearable></el-input>
+          <el-input v-model="form.newEmail" autocomplete="off" clearable maxlength="30" show-word-limit></el-input>
         </el-form-item>
 
       </el-form>

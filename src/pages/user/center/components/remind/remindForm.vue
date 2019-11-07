@@ -23,6 +23,8 @@
                   v-model="sizeForm.contact"
                   placeholder="请输入内容"
                   :fetch-suggestions="querySearch"
+                  maxlength="30"
+                  show-word-limit
                   clearable></el-autocomplete>
         </el-form-item>
       </el-form>
