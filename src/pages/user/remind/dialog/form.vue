@@ -22,7 +22,6 @@
                       v-model="sizeForm.contact"
                       placeholder="请输入内容"
                       :fetch-suggestions="querySearch"
-                      maxlength="30"
                       show-word-limit
                       clearable></el-autocomplete>
           </el-form-item>
@@ -113,6 +112,7 @@
           return
         }
 
+        console.log(this.item)
         setIntoStorage(this.sizeForm.contact)
         setRemind({
           remindDate: this.sizeForm.date1 + ' ' + this.sizeForm.date2,
@@ -125,6 +125,7 @@
         }).catch(err =>{
           this.dialogFormVisible = false
         })
+
       },
       querySearch(queryString ,cb){
         cb(JSON.parse(localStorage.getItem('email')))

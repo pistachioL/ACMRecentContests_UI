@@ -7,7 +7,7 @@
                           :timestamp="key" placement="top">
           <el-card v-for="item in val">
             <el-link type="primary" class="el-icon-alarm-clock" @click="openForm(item)" :underline="false"></el-link>
-            <h4><i class="el-icon-s-opportunity"></i>{{item.name}}</h4>
+            <h4><i class="el-icon-s-opportunity"></i>{{decodeURIComponent(item.name)}}</h4>
             <p>
               <i class="el-icon-time"></i>{{item.startTime}} {{item.week}}&#8195;&#8195;
               <i class="el-icon-timer"></i>  {{item.length}}&#8195;&#8195;
@@ -32,6 +32,7 @@ import Form from './dialog/form'
     },
     methods:{
       openForm(item){
+        item.name = encodeURIComponent(item.name)
         this.$refs.dataForm.open(item)
       }
     },
