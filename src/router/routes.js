@@ -31,6 +31,15 @@ const frameIn = [
         }
       },
       {
+        path: 'comment/postComment',
+        name: 'postComment',
+        component: () => import('@/pages/comment/postComment.vue'),
+        meta: {
+          title: '写贴文',
+
+        }
+      },
+      {
         path: 'comment/detail/:aid',
         name: 'detail',
         component: () => import('@/pages/comment/detail.vue'),
@@ -60,7 +69,7 @@ const frameIn = [
         name: 'log',
         meta: {
           title: '前端日志',
-          auth: true
+          // auth: true
         },
         component: _import('system/log')
       },

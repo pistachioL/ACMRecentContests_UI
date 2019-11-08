@@ -1,63 +1,62 @@
  <template>
     <d2-container>
       <div>
-        <!-- <Button v-on:add="add"></Button> -->
-          <ul>
+          <!-- 点击按钮 -->
+          <el-button type="text,success" @click="jump" round>发帖</el-button>
+
+
+            <ul>
               <li v-for="item in list" :key='item' style="list-style: none" >
 <!--                 <router-link :to="'comment/detail/'+ item.id">头像：{{item.avatar}}</router-link> -->
-                  <img :src="item.avatar" style="border-radius: 25px;width: 50px;height: 50px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
+<!--                  <img :src="item.avatar" style="border-radius: 25px;width: 50px;height: 50px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
                   <router-link :to="'comment/detail/'+ item.id">{{item.title}}</router-link>  <br/>
-
-                  <hr style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="900px" color=#e5e5e4 SIZE=1 />
-
-
+                  <hr>
               </li>
-          </ul>
+            </ul>
 
-
-
-
-
-     
         </div>
     </d2-container>
   </template>
 
   <script>
-  import Button from './button'
-  import Detail from './detail'
   import axios from 'axios'
+  import Button from './button'
+  import { mapState} from 'vuex'
+  import Detail from './detail'
     export default {
       components:{
-          // Button,Detail
+
       },
       data() {
         return {
-          info: null,
           list:[],
-
 
         }
       },
       methods:{
          requestData(){
-            axios.get('http://s43.natfrp.org:11439/contents').then(response=>{
-              this.list = response.data.data
-                console.log(this.list)
-                console.log(111)
+            axios.get('http://localhost:8082/getTitle').then(response=>{
+              this.list = response.data
             }).catch(function(err){
               console.log(err);
             });
 
-        }
+        },
+          //写贴文路由跳转
+          jump(){
+              this.$router.push({path: '/comment/postComment'})
+          },
+          // getAvata(){
+          //         console.log(this.info.avatar)
+          //          this.$refs.avatar.open()
+          // }
+
       },
       mounted(){
         this.requestData();
+
       }
 
-       
-     
     }
   </script>
 
