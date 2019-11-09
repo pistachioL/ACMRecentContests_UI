@@ -12,6 +12,8 @@
     import 'quill/dist/quill.snow.css'
     import 'quill/dist/quill.bubble.css'
     import axios from 'axios'
+    import {format} from '@/common/dateUtil.js'
+
     export default {
         name: 'd2-quill',
         props: {
@@ -21,9 +23,13 @@
                 default: ''
             }
         },
+        components: {
+
+        },
         data () {
             return {
                 title: '', //标题
+                time : new Date(),
                 Quill: undefined,
                 currentValue: '', //内容
                 options: {
@@ -105,7 +111,9 @@
                 // console.log(this.currentValue);
                 axios.post('http://localhost:8082/postArticle', {
                     title: this.title,
-                    content: this.currentValue
+                    content: this.currentValue,
+                    date: this.time
+
                 })
                     .then(function (response) {
                         console.log(response);

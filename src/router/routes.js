@@ -40,7 +40,7 @@ const frameIn = [
         }
       },
       {
-        path: 'comment/detail/:aid',
+        path: 'comment/detail/:id',
         name: 'detail',
         component: () => import('@/pages/comment/detail.vue'),
         meta: {
