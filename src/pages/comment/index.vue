@@ -3,15 +3,15 @@
       <div>
           <!-- 点击按钮 -->
           <el-button type="text,success" @click="jump" round>发帖</el-button>
-
             <ul>
               <li v-for="item in list" :key='item' style="list-style: none" >
+
+
 <!--                 <router-link :to="'comment/detail/'+ item.id">头像：{{item.avatar}}</router-link> -->
-<!--                  <img :src="item.avatar" style="border-radius: 25px;width: 50px;height: 50px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--                  <img :src="this.info.avatar" style="border-radius: 25px;width: 50px;height: 50px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
                   <router-link :to="'comment/detail/'+ item.id">{{item.title}}</router-link>  <br/>
-                  {{ item.date}}
 
-
+                    {{item.date}}
 
                   <hr style="border:none;border-bottom:1px solid #DaDaDa; height:1px;-webkit-transform: scaleY(0.5);-webkit-transform-origin:0 0;">
               </li>
@@ -23,17 +23,16 @@
 
   <script>
   import axios from 'axios'
-  // import {format} from '@/common/dateUtil.js'
 
   import { mapState} from 'vuex'
-  import Detail from './detail'
+
     export default {
       components:{
-          Detail
       },
       data() {
         return {
           list:[],
+
 
         }
       },
@@ -52,6 +51,7 @@
           jump(){
               this.$router.push({path: '/comment/postComment'})
           },
+
           // getAvata(){
           //         console.log(this.info.avatar)
           //          this.$refs.avatar.open()
@@ -61,7 +61,16 @@
       mounted(){
         this.requestData();
 
-      }
+
+      },
+        computed: {
+            ...mapState('d2admin/user', [
+                'info'
+            ])
+        },
+        filters:{
+
+        }
 
     }
   </script>

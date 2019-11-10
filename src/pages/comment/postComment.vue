@@ -114,17 +114,20 @@
                     content: this.currentValue,
                     date: this.time
 
+
                 })
                     .then(function (response) {
                         console.log(response);
                             alert('发布成功！');
-
+                        console.log(this.time)
                     })
                     .catch(function (error) {
                         console.log(error);
+                        console.log(this.time)
 
                     });
                 this.$router.push({path: '/comment'})
+
 
             }
 

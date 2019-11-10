@@ -8,6 +8,7 @@ import store from '@/store/index'
 // 多国语
 import i18n from './i18n'
 
+
 // 菜单和路由设置
 import router from './router'
 import menuHeader from '@/menu/header'
@@ -52,6 +53,7 @@ import D2Crud from '@d2-projects/d2-crud'
 
 Vue.use(ElementUI)
 Vue.use(D2Crud)
+
 
 let EventBus=new Vue();
 Object.defineProperties(Vue.prototype, {

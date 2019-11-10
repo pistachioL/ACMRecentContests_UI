@@ -36,7 +36,6 @@ const frameIn = [
         component: () => import('@/pages/comment/postComment.vue'),
         meta: {
           title: '写贴文',
-
         }
       },
       {
