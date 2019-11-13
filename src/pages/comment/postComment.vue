@@ -12,7 +12,8 @@
     import 'quill/dist/quill.snow.css'
     import 'quill/dist/quill.bubble.css'
     import axios from 'axios'
-    import {format} from '@/common/dateUtil.js'
+    import { postArticle } from '@/api/comment/postArticle'
+
 
     export default {
         name: 'd2-quill',
@@ -109,12 +110,11 @@
             add (){  //点击发布按钮
                 // console.log(this.title);
                 // console.log(this.currentValue);
-                axios.post('http://localhost:8082/postArticle', {
+              //  axios.post('http://localhost:8082/postArticle', {
+                postArticle({
                     title: this.title,
                     content: this.currentValue,
                     date: this.time
-
-
                 })
                     .then(function (response) {
                         console.log(response);
@@ -127,10 +127,7 @@
 
                     });
                 this.$router.push({path: '/comment'})
-
-
             }
-
         }
     }
 </script>

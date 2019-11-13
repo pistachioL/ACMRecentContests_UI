@@ -1,19 +1,18 @@
 <template>
     <d2-container >
+<!--贴文-->
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span>{{list.title}} </span>
                 <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                 <i class="fa fa-thumbs-down" aria-hidden="true"></i>
             </div>
+               <li v-html="list.content" style="list-style: none">{{list.content}}</li>
+        </el-card>
 
-
-            <el-card class="box-card">
-               <li v-html="list.content">{{list.content}}</li>
-
-            </el-card>
-
-
+<!--评论-->
+        <el-card class="box-card">
+            <el-button type="primary">回贴</el-button>
         </el-card>
     </d2-container>
 </template>
@@ -79,6 +78,6 @@
     }
 
     .box-card {
-        width: 480px;
+        width: 1000px;
     }
 </style>
