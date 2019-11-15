@@ -7,23 +7,25 @@
                 <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                 <i class="fa fa-thumbs-down" aria-hidden="true"></i>
             </div>
+
                <li v-html="list.content" style="list-style: none">{{list.content}}</li>
         </el-card>
 
 <!--评论-->
-        <el-card class="box-card">
-            <el-button type="primary">回贴</el-button>
-        </el-card>
+<!--        <el-card class="box-card">-->
+<!--            <el-button type="primary">回贴</el-button>-->
+<!--        </el-card>-->
     </d2-container>
 </template>
 <script>
   import axios from 'axios';
   import moment from 'moment';
-
+  import { getDetail } from '@/api/comment/getDetail'
   export default {
     data() {
       return {
           list:[],
+          pid: '',
           likes: 0,
           dislikes: 0,
           action: null,
@@ -39,10 +41,16 @@
 
     methods: {
         getData(id){  //获取详情页内容
-            var api = 'http://localhost:8082/getDetail/' + id;
-            axios.get(api).then(response=>{
+          // var api = 'http://localhost:8082/getDetail/' + id;
+          // axios.get(api)
+            getDetail({
+                id: id
+            })
+                .then(response=>{
+                    console.log(111);
                 console.log(response);
-                this.list = response.data;
+                this.list = response;
+
             }).catch(function(err){
                 console.log(err)
             })
@@ -61,8 +69,7 @@
     },
     mounted(){
       //console.log(this.$route.params); //获取动态路由传值
-        let id = this.$route.params.id;
-        this.getData(id);
+        this.getData(this.$route.params.id);
     }
   };
 </script>

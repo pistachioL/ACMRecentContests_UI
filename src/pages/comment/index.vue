@@ -7,11 +7,11 @@
               <li v-for="item in list" :key='item' style="list-style: none" >
 <!--                 <router-link :to="'comment/detail/'+ item.id">头像：{{item.avatar}}</router-link> -->
                  <img :src="item[1]" style="border-radius: 55px;width: 50px;height: 50px">
-                  <router-link :to="'comment/detail/'+ item.id">{{item[3]}}</router-link>  <br/>
+                  <router-link :to="'comment/detail/'+ item[0]" >{{item[3]}}</router-link>  <br/>
                   <div v-bind:style="{ color: activeColor, size:fontSize + 'px' }">
                       &#12288&#12288&#12288&#12288&#12288{{item[2]}}&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288
-                  {{item[4]}}&#12288
-                      浏览4&nbsp;&nbsp;&nbsp; 回复2&nbsp;&nbsp;&nbsp;
+                  {{item[4]}}
+                      浏览4 &nbsp;&nbsp;&nbsp; 回复2&nbsp;&nbsp;&nbsp;
                       <i class="fa fa-thumbs-up" aria-hidden="true"></i> 3
 
                   </div>
@@ -49,6 +49,7 @@
                 list: [],
                 activeColor: 'grey',
                 fontSize: 1,
+                count: 0,
 
 
             }
@@ -69,6 +70,7 @@
             jump() {
                 this.$router.push({path: '/comment/postComment'})
             },
+
         },
         mounted(){
         this.requestData();
