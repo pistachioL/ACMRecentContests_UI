@@ -3,12 +3,17 @@
 <!--贴文-->
         <el-card class="box-card">
             <div slot="header" class="clearfix">
-                <span>{{list.title}} </span>
+                <span>{{list.title}} </span> <br/>
+                <img :src="this.$route.query.data[1]" style="border-radius: 55px;width: 50px;height: 50px">
+                {{this.$route.query.data[2]}}
+                {{this.$route.query.data[4]}}
+
                 <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                 <i class="fa fa-thumbs-down" aria-hidden="true"></i>
             </div>
 
                <li v-html="list.content" style="list-style: none">{{list.content}}</li>
+
         </el-card>
 
 <!--评论-->
@@ -25,17 +30,10 @@
     data() {
       return {
           list:[],
-          pid: '',
-          likes: 0,
-          dislikes: 0,
-          action: null,
-          moment,
-          loading: false,
-          pagination: {
-              currentPage: 1,
-              pageSize: 5,
-              total: 0
-          }
+
+
+
+
       }
     },
 
@@ -44,32 +42,27 @@
           // var api = 'http://localhost:8082/getDetail/' + id;
           // axios.get(api)
             getDetail({
-                id: id
+                id: id,
             })
                 .then(response=>{
-                    console.log(111);
-                console.log(response);
+                // console.log(response);
                 this.list = response;
 
             }).catch(function(err){
                 console.log(err)
             })
         },
-        like() {
-            this.likes = 1;
-            this.dislikes = 0;
-            this.action = 'liked';
-        },
-        dislike() {
-            this.likes = 0;
-            this.dislikes = 1;
-            this.action = 'disliked';
-        },
+
+
 
     },
     mounted(){
       //console.log(this.$route.params); //获取动态路由传值
         this.getData(this.$route.params.id);
+      //   console.log('okk')
+      //   console.log(this.$route.query.data)
+
+
     }
   };
 </script>
