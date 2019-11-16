@@ -4,23 +4,21 @@
           <!-- 点击按钮 -->
           <el-button type="text,success" @click="jump" round>发帖</el-button>
             <ul>
-              <li v-for="item in list" :key='item'  @click="JumpToDetail(item)" style="list-style: none" >
+              <li v-for="item in list" :key='item' style="list-style: none" >
 
                  <!-- 头像 -->
                  <img :src="item[1]" style="border-radius: 55px;width: 50px;height: 50px">
+
                   <!-- 标题 -->
                   <el-link @click="JumpToDetail(item)" :underline="false" target="_blank">{{item[3]}}</el-link> <br/>
 
                   <!-- 姓名 -->
-                  <div v-bind:style="{ color: activeColor, size:fontSize + 'px' }">
-
-                      &#12288&#12288&#12288&#12288&#12288{{item[2]}}&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288
+                  <div v-bind:style="{ color: activeColor, size:fontSize + 'px'}">&#12288&#12288&#12288&#12288&#12288{{item[2]}}&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288
                       <!-- 日期 -->
+                      &#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288
                       {{item[4]}}
-
                       浏览4 &nbsp;&nbsp;&nbsp; 回复2&nbsp;&nbsp;&nbsp;
                       <i class="fa fa-thumbs-up" aria-hidden="true"></i> 3
-
                   </div>
 
                   <hr style="border:none;border-bottom:1px solid #DaDaDa; height:1px;-webkit-transform: scaleY(0.5);-webkit-transform-origin:0 0;">
@@ -68,8 +66,6 @@
             },
             JumpToDetail(item){
                 this.$router.push({path: 'comment/detail/'+ item[0], query:{data: item}})
-                // console.log('ok')
-                // console.log(item)  //1.avatar 2.username
             }
 
         },
