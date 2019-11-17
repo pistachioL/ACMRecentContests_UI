@@ -5,15 +5,13 @@
           <el-button type="text,success" @click="jump" round>发帖</el-button>
             <ul>
               <li v-for="item in list" :key='item' style="list-style: none" >
-
-                 <!-- 头像 -->
-                 <img :src="item[1]" style="border-radius: 55px;width: 50px;height: 50px">
-
                   <!-- 标题 -->
-                  <el-link @click="JumpToDetail(item)" :underline="false" target="_blank">{{item[3]}}</el-link> <br/>
+                  <el-link @click="JumpToDetail(item)" :underline="false" target="_blank" style="top:15px; left:60px; font-size: 20px;font-family: '微软雅黑'; ">{{item[3]}}</el-link> <br/>
+                  <!-- 头像 -->
+                  <img :src="item[1]" style="border-radius: 55px;width: 40px;height: 40px">
 
                   <!-- 姓名 -->
-                  <div v-bind:style="{ color: activeColor, size:fontSize + 'px'}">&#12288&#12288&#12288&#12288&#12288{{item[2]}}&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288
+                  <div v-bind:style="{ color: activeColor, size:fontSize + 'px', } ">&#12288&#12288&#12288&#12288&#12288{{item[2]}}&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288
                       <!-- 日期 -->
                       &#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288&#12288
                       {{item[4]}}
@@ -35,8 +33,8 @@
   import axios from 'axios'
 
   import { mapState} from 'vuex'
-  import { getCommentList } from '@/api/comment/getCommentList'
-  import {getDetail} from "../../api/comment/getDetail";
+  import { getCommentList } from '@/api/forum/article/getArticleList'
+
 
     export default {
         components: {},
@@ -46,6 +44,7 @@
                 activeColor: 'grey',
                 fontSize: 1,
                 count: 0,
+                size:20,
             }
         },
         methods: {

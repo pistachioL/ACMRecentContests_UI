@@ -11,9 +11,7 @@
     import 'quill/dist/quill.core.css'
     import 'quill/dist/quill.snow.css'
     import 'quill/dist/quill.bubble.css'
-    import axios from 'axios'
-    import { postArticle } from '@/api/comment/postArticle'
-
+    import { postArticle } from '@/api/forum/article/postArticle'
 
     export default {
         name: 'd2-quill',
@@ -108,18 +106,15 @@
                 })
             },
             add (){  //点击发布按钮
-                // console.log(this.title);
-                // console.log(this.currentValue);
-              //  axios.post('http://localhost:8082/postArticle', {
                 postArticle({
                     title: this.title,
                     content: this.currentValue,
                     date: this.time
                 })
                     .then(function (response) {
-                        console.log(response);
+                        // console.log(response);
                             alert('发布成功！');
-                        console.log(this.time)
+
                     })
                     .catch(function (error) {
                         console.log(error);
