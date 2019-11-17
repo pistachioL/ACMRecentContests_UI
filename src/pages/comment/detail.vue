@@ -23,7 +23,7 @@
     <br/>
     <!--评论-->
         <el-card class="box-card"><!--<el-card class="box-card" body-style="height:300px">-->
-            <b>2条回帖</b>
+            <b>{{this.counts}}条回帖</b>
                 <ul>
                     <li v-for="item in commentList" :key='item' style="list-style: none" >
                         <div class="avatar">
@@ -58,6 +58,7 @@
   import { getDetail } from '@/api/forum/article/getDetail'
   import { postComment } from '@/api/forum/comment/postComment'
   import {getComment} from "../../api/forum/comment/getComment";
+  import {getCommentCounts} from "../../api/forum/comment/getCommentCounts";
   import Quill from 'quill'
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
@@ -77,6 +78,7 @@
    },
     data() {
       return {
+          counts: '',  //评论数
           aid: this.$route.params.id,
           list:[],  //详情内容
           //评论
@@ -168,16 +170,14 @@
             })
         },
         postComment(){
-            console.log(233)
-            console.log(this.aid)
+            // console.log(233)
+            // console.log(this.aid)
             postComment({
                 id : this.aid,
                 content: this.currentValue,
                 date : this.time,
             })
                 .then(response=>{
-                    // console.log("发送评论")
-                    // console.log(response);
                     this.currentValue = response;
                     alert('评论成功！');
                 }).catch(function(err){
@@ -189,21 +189,25 @@
                 id: id
             })
                 .then(response=>{
-                    // console.log("评论内容");
-                    // console.log(response);
                     this.commentList = response;
+                }).catch(function(err){
+                console.log(err)
+            })
+        },
+        getCommentCounts(){
+            getCommentCounts()
+                .then(response=>{
+                    this.counts = response;
                 }).catch(function(err){
                 console.log(err)
             })
         }
     },
     mounted(){
-
         this.getData(this.$route.params.id);//获取动态路由传值
         this.init();
         this.getComments(this.$route.params.id);
-
-       
+        this. getCommentCounts();
     }
   };
 </script>
@@ -236,10 +240,5 @@
         top: 80px;
         color:#909399;
     }
-
-
-
-
-
 
 </style>
