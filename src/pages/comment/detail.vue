@@ -26,16 +26,11 @@
             <b>{{this.counts}}条回帖</b>
                 <ul>
                     <li v-for="item in commentList" :key='item' style="list-style: none" >
-                        <div class="avatar">
                             <img :src="item[2]" style="border-radius: 55px;width: 45px;height: 45px">
-                        </div>
-
-
                             <!--内容-->
                             <div v-html="item[0]">{{item[0]}}</div>
-                            <!--时间-->
+                            <!--姓名 时间-->
                         <div style="color:#909399;">    {{item[1]}}  &#12288 {{item[3]}}</div>
-
                         <hr style="border:none;border-bottom:1px solid #DaDaDa; height:1px;-webkit-transform: scaleY(0.5);-webkit-transform-origin:0 0;">
                     </li>
                 </ul>
