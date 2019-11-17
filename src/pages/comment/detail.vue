@@ -23,16 +23,21 @@
     <br/>
     <!--评论-->
         <el-card class="box-card"><!--<el-card class="box-card" body-style="height:300px">-->
-            <b>{{this.counts}}条回帖</b>
+            <b>回帖</b>
+<!--            {{this.counts}}-->
                 <ul>
-                    <li v-for="item in commentList" :key='item' style="list-style: none" >
-                            <img :src="item[2]" style="border-radius: 55px;width: 45px;height: 45px">
+                    <li v-for="item in commentList,reply_userinfo" :key='item' style="list-style: none" >
+                        <img :src="item.avatar" style="border-radius: 55px;width: 45px;height: 45px">
+                        <!--姓名 时间-->
+                        <div style="color:#909399;">    {{item.username}}</div>
+
                             <!--内容-->
-                            <div v-html="item[0]">{{item[0]}}</div>
-                            <!--姓名 时间-->
-                        <div style="color:#909399;">    {{item[1]}}  &#12288 {{item[3]}}</div>
+                            <div v-html="item.comment_content">{{item.comment_content}}</div>
+
                         <hr style="border:none;border-bottom:1px solid #DaDaDa; height:1px;-webkit-transform: scaleY(0.5);-webkit-transform-origin:0 0;">
                     </li>
+
+
                 </ul>
             </el-card>
         <br/>
@@ -74,10 +79,12 @@
     data() {
       return {
           counts: '',  //评论数
+
           aid: this.$route.params.id,
           list:[],  //详情内容
           //评论
           commentList: [],
+          reply_userinfo: [],
           time: new Date(),
           //文本编辑器
           Quill: undefined,
@@ -184,7 +191,9 @@
                 id: id
             })
                 .then(response=>{
-                    this.commentList = response;
+                    // console.log(response);
+                    this.commentList = response.comments;
+                    this.reply_userinfo = response.info;
                 }).catch(function(err){
                 console.log(err)
             })
