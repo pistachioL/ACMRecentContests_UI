@@ -23,20 +23,16 @@
     <br/>
     <!--评论-->
         <el-card class="box-card"><!--<el-card class="box-card" body-style="height:300px">-->
-            <b>回帖</b>
-<!--            {{this.counts}}-->
+            <b>条回帖</b>
                 <ul>
-                    <li v-for="item in commentList,reply_userinfo" :key='item' style="list-style: none" >
-                        <img :src="item.avatar" style="border-radius: 55px;width: 45px;height: 45px">
-                        <!--姓名 时间-->
-                        <div style="color:#909399;">    {{item.username}}</div>
+                    <li v-for="item in commentList" :key='item' style="list-style: none" >
 
+                        <img :src="item.avatar" style="border-radius: 55px;width: 45px;height: 45px">
+                        {{item.username}}
                             <!--内容-->
                             <div v-html="item.comment_content">{{item.comment_content}}</div>
-
                         <hr style="border:none;border-bottom:1px solid #DaDaDa; height:1px;-webkit-transform: scaleY(0.5);-webkit-transform-origin:0 0;">
                     </li>
-
 
                 </ul>
             </el-card>
@@ -191,9 +187,9 @@
                 id: id
             })
                 .then(response=>{
-                    // console.log(response);
-                    this.commentList = response.comments;
-                    this.reply_userinfo = response.info;
+                    console.log(response);
+                    this.commentList = response.commentList;
+
                 }).catch(function(err){
                 console.log(err)
             })
