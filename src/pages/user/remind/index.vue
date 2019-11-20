@@ -1,9 +1,8 @@
-
 <template>
   <d2-container>
     <Form ref="dataForm"/>
     <div class="block">
-      <el-timeline>
+       <el-timeline>
         <el-timeline-item v-for="(val, key, index) in contests"
                           :timestamp="key" placement="top">
           <el-card v-for="item in val">
@@ -22,8 +21,9 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import Form from './dialog/form'
+import axios from 'axios'
+import Form from './dialog/form'
+
   export default {
     data(){
       return{
@@ -53,4 +53,6 @@
     font-size: 200%;
     color: dodgerblue;
   }
+
+
 </style>

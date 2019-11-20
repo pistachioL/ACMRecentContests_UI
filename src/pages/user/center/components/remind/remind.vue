@@ -63,6 +63,7 @@
       },
       getData(){
         getRemindInfos().then(res=>{
+          console.log(res)
           this.tableData = res
           this.$store.dispatch('d2admin/db/set', {
             dbName: 'remindData',
