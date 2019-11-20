@@ -23,7 +23,7 @@
     <br/>
     <!--评论-->
         <el-card class="box-card"><!--<el-card class="box-card" body-style="height:300px">-->
-            <b>条回帖</b>
+            <b>{{this.counts}}条回帖</b>
                 <ul>
                     <li v-for="item in commentList" :key='item' style="list-style: none" >
 
@@ -75,7 +75,6 @@
     data() {
       return {
           counts: '',  //评论数
-
           aid: this.$route.params.id,
           list:[],  //详情内容
           //评论
@@ -168,8 +167,6 @@
             })
         },
         postComment(){
-            // console.log(233)
-            // console.log(this.aid)
             postComment({
                 id : this.aid,
                 content: this.currentValue,
@@ -194,8 +191,10 @@
                 console.log(err)
             })
         },
-        getCommentCounts(){
-            getCommentCounts()
+        getCommentCounts(id){
+            getCommentCounts({
+                id: id
+            })
                 .then(response=>{
                     this.counts = response;
                 }).catch(function(err){
@@ -207,7 +206,7 @@
         this.getData(this.$route.params.id);//获取动态路由传值
         this.init();
         this.getComments(this.$route.params.id);
-        this. getCommentCounts();
+        this. getCommentCounts(this.$route.params.id);
     }
   };
 </script>
