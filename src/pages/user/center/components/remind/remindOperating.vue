@@ -29,7 +29,7 @@
     },
     methods: {
       handleRowView(){
-        this.$refs.remind_info.open()
+        this.$refs.remind_info.open(this.scope.row, this.scope.$index)
       },
       handleCommand(command) {
         if(command === 'edit'){

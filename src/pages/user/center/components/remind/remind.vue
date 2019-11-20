@@ -71,7 +71,6 @@
             value: this.tableData,
             user: true
           })
-
           this.loading = false
         })
       },

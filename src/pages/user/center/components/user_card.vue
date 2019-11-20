@@ -73,7 +73,6 @@
     },
     methods:{
       uploadAvatar(){
-        console.log(this.info.avatar)
         this.$refs.avatar.open()
       }
     }

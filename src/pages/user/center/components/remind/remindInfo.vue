@@ -36,17 +36,18 @@
       return{
         dialogFormVisible: false,
         tableData: [],
+        remindInfos: [],
         contest: {}
       }
     },
     methods:{
-      open(){
+      open(row, index){
+        this.tableData = this.remindInfos[index]
         axios.get('https://greenhathg.co/api/v1/contests/name', {
           params: {
-            name: this.tableData.name
+            name: row.name
           }
         }).then(res =>{
-          console.log(res)
           if(res.data.code === 400){
             this.$message.error("该比赛已过期,请删除")
             return
@@ -68,7 +69,7 @@
         user: true
       })
       value.then(val =>{
-        this.tableData = val[0]
+        this.remindInfos = val
       })
     }
 

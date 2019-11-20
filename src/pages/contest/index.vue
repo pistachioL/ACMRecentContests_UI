@@ -71,7 +71,6 @@
           this.loading = false
           this.tableData=response.data.data;
         }).catch((error)=>{
-          console.log(error);
         }).finally(()=>{
         });
       }
