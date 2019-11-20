@@ -111,8 +111,6 @@
           this.$message.error(s)
           return
         }
-
-        console.log(this.item)
         setIntoStorage(this.sizeForm.contact)
         setRemind({
           remindDate: this.sizeForm.date1 + ' ' + this.sizeForm.date2,

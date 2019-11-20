@@ -3,7 +3,7 @@
     <Form ref="dataForm"/>
     <div class="block">
        <el-timeline>
-        <el-timeline-item v-for="(val, key, index) in contests"
+        <el-timeline-item v-for="(val, key) in contests"
                           :timestamp="key" placement="top">
           <el-card v-for="item in val">
             <el-link type="primary" class="el-icon-alarm-clock" @click="openForm(item)" :underline="false"></el-link>
@@ -32,9 +32,9 @@ import Form from './dialog/form'
     },
     methods:{
       openForm(item){
-        let snapshot = JSON.parse(JSON.stringify(item))
-        snapshot.name = encodeURIComponent(snapshot.name)
-        this.$refs.dataForm.open(snapshot)
+        // let snapshot = JSON.parse(JSON.stringify(item))
+        // snapshot.name = encodeURIComponent(snapshot.name)
+        this.$refs.dataForm.open(item)
       }
     },
     mounted() {

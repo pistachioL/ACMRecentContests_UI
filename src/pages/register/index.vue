@@ -160,7 +160,6 @@ export default {
             this.$router.push({path:'/login'})
           }).catch(err =>{
             this.loginingRegister = false
-            console.log(err)
           })
         }else{
           this.$message.error("提交失败,请检查是否有未符合要求的信息")
