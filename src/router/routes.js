@@ -35,7 +35,7 @@ const frameIn = [
         name: 'postComment',
         component: () => import('@/pages/comment/postComment.vue'),
         meta: {
-          title: '写贴文',
+          title: '写帖文',
         }
       },
       {
@@ -43,7 +43,7 @@ const frameIn = [
         name: 'detail',
         component: () => import('@/pages/comment/detail.vue'),
         meta: {
-          title: '贴文详情',
+          title: '帖文详情',
         }
       },
       {

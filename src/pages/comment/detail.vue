@@ -43,7 +43,6 @@
              <div ref="editor" v-model="currentValue"></div>
         </el-card>
         <br/>
-
         <el-button type="primary" @click="postComment">回贴</el-button>
 
     </d2-container>
@@ -175,6 +174,7 @@
                 .then(response=>{
                     this.currentValue = response;
                     alert('评论成功！');
+                    this.reload();
                 }).catch(function(err){
                 console.log(err)
             })
@@ -184,7 +184,7 @@
                 id: id
             })
                 .then(response=>{
-                    console.log(response);
+                    // console.log(response);
                     this.commentList = response.commentList;
 
                 }).catch(function(err){
@@ -200,7 +200,8 @@
                 }).catch(function(err){
                 console.log(err)
             })
-        }
+        },
+
     },
     mounted(){
         this.getData(this.$route.params.id);//获取动态路由传值

@@ -40,6 +40,7 @@
         components: {},
         data() {
             return {
+                counts: '',
                 list: [],
                 activeColor: 'grey',
                 fontSize: 1,
@@ -65,12 +66,23 @@
             },
             JumpToDetail(item){
                 this.$router.push({path: 'comment/detail/'+ item[0], query:{data: item}})
-            }
+            },
+            // getCommentCounts(id){
+            //     getCommentCounts({
+            //         id: id
+            //     })
+            //         .then(response=>{
+            //             this.counts = response;
+            //         }).catch(function(err){
+            //         console.log(err)
+            //     })
+            // },
 
         },
         mounted(){
         this.requestData();
         this.JumpToDetail(item);
+        this.getCommentCounts(item[0]);
 
 
 
