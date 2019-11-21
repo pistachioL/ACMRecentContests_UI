@@ -28,7 +28,10 @@
                     <li v-for="item in commentList" :key='item' style="list-style: none" >
 
                         <img :src="item.avatar" style="border-radius: 55px;width: 45px;height: 45px">
+                        <div style="color:#909399;"  >
                         {{item.username}}
+                        {{item.comment_time}}
+                        </div>
                             <!--内容-->
                             <div v-html="item.comment_content">{{item.comment_content}}</div>
                         <hr style="border:none;border-bottom:1px solid #DaDaDa; height:1px;-webkit-transform: scaleY(0.5);-webkit-transform-origin:0 0;">
@@ -43,7 +46,7 @@
              <div ref="editor" v-model="currentValue"></div>
         </el-card>
         <br/>
-        <el-button type="primary" @click="postComment">回贴</el-button>
+        <el-button type="primary" @click="postComment" v-if="isRouterAlive">回贴</el-button>
 
     </d2-container>
 </template>
@@ -61,6 +64,11 @@
 
   export default {
     name: 'd2-quill',
+      provide () {
+          return {
+              reload: this.reload
+          }
+      },
     props: {
       value: {
           type: String,
@@ -73,6 +81,7 @@
    },
     data() {
       return {
+          isRouterAlive: true,
           counts: '',  //评论数
           aid: this.$route.params.id,
           list:[],  //详情内容
@@ -201,6 +210,12 @@
                 console.log(err)
             })
         },
+        reload () {
+            this.isRouterAlive = false
+            this.$nextTick(function () {
+                this.isRouterAlive = true
+            })
+        }
 
     },
     mounted(){
